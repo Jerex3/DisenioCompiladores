@@ -1,0 +1,18 @@
+INT var1;
+SINGLE var2, var3;
+INT FUNC (INT) varFunc;
+INT FUNC func1 (INT param)
+	INT var4, var5;
+	BEGIN
+		var6 := 100000;
+		RETURN (var6);
+		POST : (var5 > 10 && var4 <> 4 || 4==2), %postcondicion valida%;
+	END;
+BEGIN
+IF ( var2 > 33 ) THEN 
+	var2 := 4;
+ENDIF;
+WHILE (var3 <> 4) DO
+	var3 := func1(var2);
+PRINT (%impresion%);
+END
