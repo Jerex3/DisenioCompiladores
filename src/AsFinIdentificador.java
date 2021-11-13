@@ -16,12 +16,12 @@ public class AsFinIdentificador implements AccionSemantica {
             //Si no esta en la tabla de simbolos lo agrego, sino devuelvo referencia
             if (a.estaEnTabla(lexema)) {
                 //esta en tabla devuelvo referencia
-                a.setEntrada(a.getEntrada(lexema));
+                a.setEntrada(lexema);
             } else {
                 // no esta en tabla, agrega a TS y tambien setea entrada en getToken para darle al parser la referencia
-                EntradaTablaSimbolos elementoTS = new EntradaTablaSimbolos(lexema, EntradaTablaSimbolos.IDENTIFICADOR);
+                EntradaTablaSimbolos elementoTS = new EntradaTablaSimbolos(lexema, EntradaTablaSimbolos.IDENTIFICADOR, a.getLinea());
                 a.agregarATablaSimbolos(elementoTS);
-                a.setEntrada(elementoTS);
+                a.setEntrada(lexema);
             }
         }
     }

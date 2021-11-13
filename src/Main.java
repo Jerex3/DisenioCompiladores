@@ -5,9 +5,10 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
-    	String source = args[0].trim();
-    	source += ".txt";
+    	String source = "Fuente.txt";
         Reader read = new Reader(source);
+        read.imprimir();
+
         LectorMatrizTE mte = new LectorMatrizTE("MTE.txt");
         LectorMatrizAS mas = new LectorMatrizAS("MAS.txt");
         Parser parser = new Parser(read);
@@ -36,6 +37,17 @@ public class Main {
         else System.out.println("No se reconocieron errores sintacticos.");
         System.out.println();
 
+        //Errores codigo intermedio
+        ArrayList<String> errCodInt = parser.getErroresCodInt();
+        if(errCodInt.size() > 0){
+            System.out.println("Los errores en codigo intermedio reconocidos son los siguientes: ");
+            for (String err : errCodInt){
+                System.out.println(err);
+            }
+        }
+        else System.out.println("No se reconocieron errores en codigo intermedio.");
+        System.out.println();
+
         //Lista de tokens
         ArrayList<String> tokens = parser.getListaDeTokens();
         if(tokens.size() > 0){
@@ -62,8 +74,21 @@ public class Main {
         HashMap<String, EntradaTablaSimbolos> tabla = parser.getTablaSimbolos();
         System.out.println("La tabla de simbolos queda de la siguiente forma: ");
         for(Map.Entry<String, EntradaTablaSimbolos> en : tabla.entrySet()){
-            System.out.println("Lexema: " + en.getValue().getLexema() + " Tipo: " + en.getValue().getTipo());
+            System.out.println("Lexema: " + en.getKey() + " Tipo: " + en.getValue().getTipo());
         }
 
+        //Tercetos
+        HashMap<String, ArrayList<TercetoOperandos>> tercetos = parser.getTercetos();
+        if(tercetos.size() > 0){
+            System.out.println("Los tercetos son los siguientes: ");
+            for(Map.Entry<String, ArrayList<TercetoOperandos>> en : tercetos.entrySet()){
+                System.out.println("Para el ambito " + en.getKey() + " : ");
+                for(TercetoOperandos ter : en.getValue()){
+                    System.out.println(ter.toString());
+                    System.out.println(ter.getTipo());
+                }
+            }
+        }
+        else System.out.println("No se generaron tercetos");
     }
 }

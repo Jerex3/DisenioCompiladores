@@ -39,12 +39,12 @@ public class AsFinSingle implements AccionSemantica {
 
         if (a.estaEnTabla(String.valueOf(tempDouble))) {
             //esta en tabla devuelvo referencia
-            a.setEntrada(a.getEntrada(String.valueOf(tempDouble)));
+            a.setEntrada(String.valueOf(tempDouble));
         } else {
             // no esta en tabla, agrega a TS y tambien setea entrada en getToken para darle al parser la referencia
-            EntradaTablaSimbolos elementoTS = new EntradaTablaSimbolos(String.valueOf(tempDouble), EntradaTablaSimbolos.SINGLE);
+            EntradaTablaSimbolos elementoTS = new EntradaTablaSimbolos(String.valueOf(tempDouble), EntradaTablaSimbolos.SINGLE, a.getLinea());
             a.agregarATablaSimbolos(elementoTS);
-            a.setEntrada(elementoTS);
+            a.setEntrada(String.valueOf(tempDouble));
         }
 
     }

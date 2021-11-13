@@ -11,12 +11,12 @@ public class AsFinCadena implements AccionSemantica {
         //Si no esta en la tabla de simbolos lo agrego, sino devuelvo referencia
         if (a.estaEnTabla(cadena)) {
             //esta en tabla devuelvo referencia
-            a.setEntrada(a.getEntrada(cadena));
+            a.setEntrada(cadena);
         } else {
             // no esta en tabla, agrega a TS y tambien setea entrada en getToken para darle al parser la referencia
-            EntradaTablaSimbolos elementoTS = new EntradaTablaSimbolos(cadena, EntradaTablaSimbolos.CADENA);
+            EntradaTablaSimbolos elementoTS = new EntradaTablaSimbolos(cadena, EntradaTablaSimbolos.CADENA, a.getLinea());
             a.agregarATablaSimbolos(elementoTS);
-            a.setEntrada(elementoTS);
+            a.setEntrada(cadena);
         }
         a.incPosition();
     }

@@ -44,4 +44,11 @@ public class Reader {
         }
     }
 
+    public void imprimir(){
+        String[] arr = sourceCode.replaceFirst(".$","").split("\n");
+        for(int i = 0; i < arr.length; i++){
+           System.out.println("Linea " + (i+1) + ": " + arr[i]);
+        }
+    }
+
 }

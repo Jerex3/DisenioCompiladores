@@ -16,13 +16,13 @@ public class AsFinEntero implements AccionSemantica {
         
         if(a.estaEnTabla(String.valueOf(bufferInteger))){
 
-            a.setEntrada(a.getEntrada(String.valueOf(bufferInteger)));
+            a.setEntrada(String.valueOf(bufferInteger));
 
         } else {
 
-            EntradaTablaSimbolos elementoTS = new EntradaTablaSimbolos(String.valueOf(bufferInteger), EntradaTablaSimbolos.INT);
+            EntradaTablaSimbolos elementoTS = new EntradaTablaSimbolos(String.valueOf(bufferInteger), EntradaTablaSimbolos.INT, a.getLinea());
             a.agregarATablaSimbolos(elementoTS);
-            a.setEntrada(elementoTS);
+            a.setEntrada(String.valueOf(bufferInteger));
 
         }
 

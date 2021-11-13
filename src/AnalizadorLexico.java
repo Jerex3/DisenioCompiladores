@@ -31,7 +31,7 @@ public class AnalizadorLexico {
     private int[][] mTE = LectorMatrizTE.getMatriz();
     private AccionSemantica[][] mAS = LectorMatrizAS.getMatriz();
 
-    private EntradaTablaSimbolos entrada;
+    private String entrada;
     private ArrayList<String> listaPalabrasReservadas = new ArrayList<>();
     private ArrayList<String> listaDeErroresLexicos = new ArrayList<>();
     private ArrayList<String> listaDeTokens = new ArrayList<>();
@@ -76,8 +76,40 @@ public class AnalizadorLexico {
         return !(tablaDeSimbolos.get(lexema) == null);
     }
 
+    public EntradaTablaSimbolos estaEnTablaSimbolos(String lexema)
+    {
+        int primerPunto = lexema.indexOf(".");
+        String nombreVariable = lexema.substring(0, primerPunto);
+        String ambito = lexema.substring(primerPunto);
+        int primerPuntoTabla = 0;
+        EntradaTablaSimbolos atributosTablaDeSimbolos = null;
+        System.out.println("Buscando la variable " + nombreVariable + " Con ambito " + ambito);
+        for(HashMap.Entry<String, EntradaTablaSimbolos> entry : this.tablaDeSimbolos.entrySet())
+        {
+            primerPuntoTabla = entry.getKey().indexOf(".");
+            if(primerPuntoTabla >= 0)
+            {
+                String nombreVariableTabla = entry.getKey().substring(0, primerPuntoTabla);
+                String ambitoTabla = entry.getKey().substring(primerPuntoTabla);
+                if(nombreVariable.equals(nombreVariableTabla) && ambito.contains(ambitoTabla))
+                {
+                    atributosTablaDeSimbolos = entry.getValue();
+                    atributosTablaDeSimbolos.setLexema(entry.getKey());
+                    if(nombreVariable.equals(nombreVariableTabla) && ambito.equals(ambitoTabla))
+                    {
+                        return atributosTablaDeSimbolos;
+                    }
+                    System.out.println("ambito contenido para la variable  " + nombreVariableTabla + " Con ambito " + ambitoTabla);
+                }
+
+            }
+        }
+
+        return atributosTablaDeSimbolos;
+    }
+
     //se utiliza para inicializar la lista de palabras reservadas
-    private void cargarListaPR() { // IF, THEN, ELSE, ENDIF, PRINT, FUNC, RETURN, BEGIN, END, BREAK, INT, SINGLE, WHILE, DO
+    private void cargarListaPR() { // IF, THEN, ELSE, ENDIF, PRINT, FUNC, RETURN, BEGIN, END, BREAK, INT, SINGLE, WHILE, DO, POST
         listaPalabrasReservadas.add("IF");
         listaPalabrasReservadas.add("THEN");
         listaPalabrasReservadas.add("ELSE");
@@ -241,7 +273,7 @@ public class AnalizadorLexico {
     }
 
     //setea la ultima entrada a la tabla de simbolos
-    public void setEntrada(EntradaTablaSimbolos elementoTS) {
+    public void setEntrada(String elementoTS) {
         entrada = elementoTS;
     }
 
@@ -251,7 +283,7 @@ public class AnalizadorLexico {
     }
 
     //retorna la ultima entrada a la tabla de simbolos
-    public EntradaTablaSimbolos getEntradaTablaSimbolo() {
+    public String getEntradaTablaSimbolo() {
         return entrada;
     }
 
@@ -259,4 +291,39 @@ public class AnalizadorLexico {
     public HashMap<String, EntradaTablaSimbolos> getTablaDeSimbolos() {
         return tablaDeSimbolos;
     }
+
+    public EntradaTablaSimbolos esRedeclarada(String lexema){
+        int primerPunto = lexema.indexOf(".");
+        String nombreVariable = lexema.substring(0, primerPunto);
+        String ambito = lexema.substring(primerPunto);
+        int primerPuntoTabla = 0;
+        for(HashMap.Entry<String, EntradaTablaSimbolos> entry : this.tablaDeSimbolos.entrySet())
+        {
+            primerPuntoTabla = entry.getKey().indexOf(".");
+            if(primerPuntoTabla >= 0)
+            {
+                String nombreVariableTabla = entry.getKey().substring(0, primerPuntoTabla);
+                String ambitoTabla = entry.getKey().substring(primerPuntoTabla);
+                if(nombreVariable.equals(nombreVariableTabla) && ambito.equals(ambitoTabla))
+                {
+                    return entry.getValue();
+                }
+            }
+        }
+        return null;
+    }
+
+    public void bajaTablaDeSimbolos(String lexema){
+        this.tablaDeSimbolos.remove(lexema);
+    }
+
+    public void altaTablaDeSimbolos(String lexema, EntradaTablaSimbolos valor){
+        this.tablaDeSimbolos.put(lexema, valor);
+    }
+
+    public void cambiarClave(String claveAntigua, String claveNueva){
+        EntradaTablaSimbolos valor = this.tablaDeSimbolos.remove(claveAntigua);
+        this.tablaDeSimbolos.put(claveNueva, valor);
+    }
+
 }
