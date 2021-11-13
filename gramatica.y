@@ -206,46 +206,30 @@ import java.util.*;
 
 
     asignacion :
-        identificador ASIGNACION expresionCompleta ';'          { 
-								 AtributosTablaDeSimbolos estaEnTablaSimbolos = this.lexico.estaEnTablaSimbolos($1.sval + this.ambitoActual);
-                                 if(estaEnTablaSimbolos != null)
-								 {
-									String lexema = estaEnTablaSimbolos.getLexema();
-									estaEnTablaSimbolos.agregarReferencia(this.lexico.getLineaActual());
-									TriplaConversion tripla = this.tablaDeConversionDeTiposAsignacion.get(estaEnTablaSimbolos.getTipo() + "-" + this.tipoExpresion);
-									if(tripla.getTipo().equals("X"))
-									{
-										this.comenzarMensaje();
-										this.textoPorPantalla.append(": Error por incompatibilidad de tipos. El tipo del lado izquierdo de la asignacion es UINT, mientras que el tipo del lado derecho de la asignacion es DOUBLE.");
-										this.addErrorCodigoIntermedio(this.textoPorPantalla.toString());
-									}
-									else
-									{
-										this.asignacion = new TercetoConOperando("=", new TercetoTablaDeSimbolos(lexema), this.expresion);
-										this.asignacion.setTipo(tripla.getTipo());
-										if(!tripla.getConversionSegundoOperando().equals("-"))
-										{
-											TercetoConOperando expresionPrima = new TercetoConOperando(tripla.getConversionSegundoOperando(), this.expresion);
-											expresionPrima.setResultado("@AUXCONV_" + this.contadorVariablesAuxiliaresConversion);
-											expresionPrima.setTipo(tripla.getTipo());
-											this.agregarAuxiliarConversionTablaDeSimbolos(tripla.getTipo());
-											this.contadorVariablesAuxiliaresConversion++;
-											this.addTerceto(expresionPrima);
-											this.asignacion.setOperador2(expresionPrima);
-										}
-										this.addTerceto(this.asignacion);
-										this.tipoAsignacion = estaEnTablaSimbolos.getTipo();
-									}
+        identificador ASIGNACION expresionCompleta ';'          
+                                { 
+								 EntradaTablaSimbolos estaEnTablaSimbolos = this.al.estaEnTablaSimbolos($1.sval + this.ambitoActual);
+                                 if(estaEnTablaSimbolos != null) {  
+                                	 
+   									 this.asignacion = new TercetoOperandos(":=",new TercetoLexema(estaEnTablaSimbolos.getLexema()), this.expresion);
+   									 
+                                	 if(!this.tipoExpresion.equals(estaEnTablaSimbolos.getTipo())) {
+     									this.addErrorCodigoIntermedio("No es posible realizar la asignacion por incompatibilidad de tipos");
+     									this.asignacion.setTipo(EntradaTablaSimbolos.SINGLE);
+                                	 } else {
+      									this.asignacion.setTipo(estaEnTablaSimbolos.getTipo());
+                                	 }
+                                	 
+                        
+								 } else { 									
+									this.addErrorCodigoIntermedio(": La variable '" + $3.sval + "' en el ámbito actual no fue declarada.'");
+  									 this.asignacion = new TercetoOperandos(":=",new TercetoLexema("VariableNoEncontrada"), this.expresion);
+
 								 }
-								 else
-								 { 
-									this.comenzarMensaje();
-									this.textoPorPantalla.append(": La variable '");
-									this.textoPorPantalla.append($1.sval);
-									this.textoPorPantalla.append("' en el ámbito actual no fue declarada.'");
-									this.addErrorCodigoIntermedio(this.textoPorPantalla.toString());
-								 }
-								 this.lexico.bajaTablaDeSimbolos($1.sval);
+                                 
+                            	 this.addTerceto(asignacion);
+                            	 this.tipoAsignacion = asignacion.getTipo();
+								 this.al.bajaTablaDeSimbolos($3.sval);
                               }        
         
         |
@@ -327,48 +311,103 @@ import java.util.*;
 
     condicion :
         condicion OR subcondicion
+                                                    {
+                                                    TercetoOperandos ter = new TercetoOperandos("||", this.tercetoCondicion, TercetoSubcondicion );
+                                                    this.addTerceto(ter);
+                                                 	   
+                                                    }
         |
-        subcondicion
+        subcondicion								{this.tercetoCondicion = this.TercetoSubcondicion;}
     ;
 
 
     subcondicion :
-        subcondicion AND comparacion
+        subcondicion AND comparacion            {
+                                                    TercetoOperandos ter = new TercetoOperandos("&&", TercetoSubcondicion, tercetoComparacion );
+                                                    this.addTerceto(ter);
+                                                   
+                                                }
         |
-        comparacion
+        comparacion								{this.TercetoSubcondicion = this.tercetoComparacion;  }
     ;
 
 
     comparacion :
-        expresionSimple comparador expresionSimple
+        expresionSimple comparador expresionSimple       {
+                                                      TercetoOperandos ter = new TercetoOperandos(this.comparador, this.expresionPreComparador, this.expresion );
+                                                            if(!this.tipoExpresionPreComparador.equals(this.tipoExpresion)){
+                                                                listaErroresCodigoIntermedio.add("No es posible realizar una comparacion entre dos tipos distintos");
+                                                                ter.setTipo(EntradaTablaSimbolos.SINGLE);
+
+                                                            } else {
+                                                                ter.setTipo(this.tipoExpresion.toString());
+                                                            }
+                                                            this.addTerceto(ter);
+                                                            this.tercetoComparacion = ter;
+                                                         }
+                                                         		
     ;
 
 
     expresionSimple :
-        expresionSimple '+' termino             {this.expresion = crearTercetoOperandos("+", tipoExpresion, this.tipoTermino, this.expresion, this.termino);}
+        expresionSimple '+' termino             {this.expresion = crearTercetoOperandos("+", tipoExpresion, this.tipoTermino, this.expresion, this.termino);
+        										  if(this.listaExpresiones.size() > 0) {
+														this.listaExpresiones.remove(this.listaExpresiones.size() - 1);
+												  }
+												 
+        										  this.listaExpresiones.add(this.expresion);
+        							
+        											}
         |
-        expresionSimple '-' termino             {this.expresion = crearTercetoOperandos("-", tipoExpresion, this.tipoTermino, this.expresion, this.termino);}
+        expresionSimple '-' termino             {this.expresion = crearTercetoOperandos("-", tipoExpresion, this.tipoTermino, this.expresion, this.termino);
+                								 if(this.listaExpresiones.size() > 0) {
+													 this.listaExpresiones.remove(this.listaExpresiones.size() - 1);
+												  }
+											  
+                                                 this.listaExpresiones.add(this.expresion);
+                                                 
+        
+        }
         |
-        termino                    {this.expresion = this.termino;
+        termino                    {
+                                    this.expresion = this.termino;
                                     this.tipoExpresion.setLength(0);
                                     this.tipoExpresion.append(this.tipoTermino.toString());
+                                    
+                                    this.listaExpresiones.add(this.expresion);
+                            
+                                    
+                                    
                                    }
-        |
-        SINGLE ( expresionSimple ) {this.expresion = this.conversionExplicita(this.tipoExpresion, this.expresion) }
+       
+        
 
     ;
 
 
     termino :
         termino '*' factor          {this.termino = crearTercetoOperandos("*", this.tipoTermino, this.tipoFactor, this.termino, this.factor);
+                              		 if(this.listaTerminos.size() > 0) {
+										 this.listaTerminos.remove(this.listaTerminos.size() - 1);
+									  }
+                                   	
+                                   	 this.listaTerminos.add(this.termino);	
+                                   	
                                     }
         |
-        termino '/' factor          {this.termino = crearTercetoOperandos("/", this.tipoTermino, this.tipoFactor, this.termino, this.factor);
+        termino '/' factor          { this.termino = crearTercetoOperandos("/", this.tipoTermino, this.tipoFactor, this.termino, this.factor);
+      								  if(this.listaTerminos.size() > 0) {
+										 this.listaTerminos.remove(this.listaTerminos.size() - 1);
+									  }
+                                   	
+                                   	  this.listaTerminos.add(this.termino);	
                                     }
         |
         factor                      {this.termino = this.factor;
                                      this.tipoTermino.setLength(0);
                                      this.tipoTermino.append(this.tipoFactor.toString());
+                                	 this.listaTerminos.add(this.termino);	
+                               
                                     }
     ;
 
@@ -392,45 +431,71 @@ import java.util.*;
 			  this.al.bajaTablaDeSimbolos($1.sval);
         }
         |
+        SINGLE '(' expresionSimple ')' {
+		       			 this.factor = this.conversionExplicita(this.tipoExpresion, this.expresion);
+		        		 this.tipoFactor.setLength(0);
+						 this.tipoFactor.append(EntradaTablaSimbolos.SINGLE); 
+						  if(this.listaExpresiones.size() > 0) {
+							 this.listaExpresiones.remove(this.listaExpresiones.size() - 1);
+						 }
+						   if(this.listaTerminos.size() > 0) {
+							 this.listaTerminos.remove(this.listaTerminos.size() - 1);
+						 }
+						  if(this.listaExpresiones.size() > 0) {
+							 this.expresion = this.listaExpresiones.get(this.listaExpresiones.size() - 1);
+						 }
+						 if(this.listaTerminos.size() > 0){
+ 							 this.termino = this.listaTerminos.get(this.listaTerminos.size() -1 );
+ 							
+						 }
+							
+						 
+				}
+        |
         cte
     ;
 
-
-    comparador :
-        '>'
-        |
-        '<'
-        |
-        MAYORIGUAL
-        |
-        MENORIGUAL
-        |
-        IGUAL
-        |
-        DISTINTO
-    ;
-
-
+comparador : '>'  {
+					  this.accionSemanticaComparador();
+					  this.comparador = ">";
+				  }
+           
+           | '<' {
+					  this.accionSemanticaComparador();
+					  this.comparador = "<";
+				 }
+           
+           | IGUAL {
+							this.accionSemanticaComparador();
+							this.comparador = "==";
+						}
+           
+           | MAYORIGUAL {
+								this.accionSemanticaComparador();
+								this.comparador = ">=";
+							  }
+           
+           | MENORIGUAL {
+								this.accionSemanticaComparador();
+								this.comparador = "<=";
+							  }
+           
+           | DISTINTO {
+						this.accionSemanticaComparador();
+						this.comparador = "!=";
+					  }
+           
+           ; 
     expresionCompleta :
-        expresionSimple
-        |
         invocacionFuncion
         |
-        conversionExplicita
-        |
-        CADENA {System.out.println("KKKKKKKKKKKKKKK");}
+        expresionSimple
+        |        
+        CADENA 
     ;
 
 
-    conversionExplicita :
-        SINGLE '(' expresionCompleta ')'            {addReglaSintacticaReconocida(String.format("Conversion explicita reconocida en linea %1$d",al.getLinea()));}
-        |
-        SINGLE error expresionCompleta ')'           {addErrorSintactico(String.format("Falta un '(' en la conversion en linea %1$d",al.getLinea()));}
-        |
-        SINGLE '(' error ')'                        {addErrorSintactico(String.format("Falta la expresion en la conversion en linea %1$d",al.getLinea()));}
-        |
-        SINGLE '(' expresionCompleta error          {addErrorSintactico(String.format("Falta un ')' en la conversion en linea %1$d",al.getLinea()));}
-    ;
+
 
 
     invocacionFuncion :
@@ -481,6 +546,8 @@ import java.util.*;
     private ArrayList<String> listaDeReglas = new ArrayList<String>();
     private ArrayList<String> listaDeErroresSintacticos = new ArrayList<String>();
     private ArrayList<String> listaErroresCodigoIntermedio = new ArrayList<String>();
+	private ArrayList<Terceto> listaExpresiones = new ArrayList<Terceto>();
+	private ArrayList<Terceto> listaTerminos = new ArrayList<Terceto>();
 
     private Stack<TercetoPosicion> pilaTercetos = new Stack<TercetoPosicion>();
 
@@ -512,7 +579,9 @@ import java.util.*;
 	private TercetoOperandos asignacion;
 	private Terceto expresionPreComparador;
 	private TercetoOperandos condicion;
-
+	private TercetoOperandos TercetoSubcondicion;
+	private TercetoOperandos TercetoCondicion;
+	private TercetoOperandos tercetoComparacion;
 	private StringBuilder tipoFactor = new StringBuilder();
 	private StringBuilder tipoTermino = new StringBuilder();
 	private StringBuilder tipoExpresion = new StringBuilder();
@@ -640,88 +709,25 @@ import java.util.*;
     //expresion_o_termino si es true se trata de una expresión o una condición y si es false se trata de un término. Esto lo hacemos para saber en que HashMap de tabla de conversión buscar.
 	private TercetoOperandos crearTercetoOperandos(String operando, StringBuilder tipoPrimerOperando, StringBuilder tipoSegundoOperando, Terceto tercetoPrimerOperando, Terceto tercetoSegundoOperando)
 	{
-		Tripla tripla;
-		if(operando.equals("+") || operando.equals("-"))
-		{
-			tripla = this.tablaDeConversionDeTiposSumaRestaComp.get(tipoPrimerOperando.toString() + "-" + tipoSegundoOperando.toString());
-		}
-		else
-		{
-			if(operando.equals("*"))
-			{
-				tripla = this.tablaDeConversionDeTiposMult.get(tipoPrimerOperando.toString() + "-" + tipoSegundoOperando.toString());
-			}
-			else
-			{
-				tripla = this.tablaDeConversionDeTiposDiv.get(tipoPrimerOperando.toString() + "-" + tipoSegundoOperando.toString());
-			}
-		}
-
-      TercetoOperandos expresionConOperando = new TercetoOperandos(operando, tercetoPrimerOperando, tercetoSegundoOperando);
+		 TercetoOperandos expresionConOperando = new TercetoOperandos(operando, tercetoPrimerOperando, tercetoSegundoOperando);
       //addTerceto(expresionConOperando);
 		///*
-		expresionConOperando.setTipo(tripla.getTipo());
-		if(tipoPrimerOperando.toString().equals(tipoSegundoOperando.toString()))
+	
+		if(!tipoPrimerOperando.toString().equals(tipoSegundoOperando.toString()))
 		{
-			this.addTerceto(expresionConOperando);
-			if(!tipoPrimerOperando.toString().equals(tripla.getTipo()))
-			{
-                TercetoOperandos conversionTercetoAritmetico = new TercetoOperandos("itos", expresionConOperando);
-				conversionTercetoAritmetico.setResultado(".AUXCONV_" + this.contadorVariablesAuxiliaresConversion);
-				conversionTercetoAritmetico.setTipo(tripla.getTipo());
-				this.agregarAuxiliarConversionTablaDeSimbolos(tripla.getTipo());
-				this.contadorVariablesAuxiliaresConversion++;
-				conversionTercetoAritmetico.setTipo(EntradaTablaSimbolos.SINGLE);
-				this.addTerceto(conversionTercetoAritmetico);
-				tipoPrimerOperando.setLength(0);
-                tipoPrimerOperando.append(tripla.getTipo());
-				expresionConOperando = conversionTercetoAritmetico;
-			}
-			else if(!tripla.getTipo().equals(EntradaTablaSimbolos.INT))
-			{
-				this.agregarAuxiliarTablaDeSimbolos(tercetoPrimerOperando, tercetoSegundoOperando, tripla.getTipo());
-				expresionConOperando.setResultado(".AUX_" + this.contadorVariablesAuxiliares);
-				this.contadorVariablesAuxiliares++;
-			}
+			this.listaErroresCodigoIntermedio.add("Incompatibilidad de tipos entre " + tercetoPrimerOperando.getTextoOperando() + " y " + tercetoSegundoOperando.getTextoOperando());
+			expresionConOperando.setTipo(EntradaTablaSimbolos.SINGLE);
+
+			
+		} else {
+			
+			expresionConOperando.setTipo(tipoPrimerOperando.toString());
+			
 		}
-		else
-		{
-			if(!tripla.getConversionPrimerOperando().equals("-"))
-			{
-                TercetoOperandos primerOperandoPrima = new TercetoOperandos(tripla.getConversionPrimerOperando(), tercetoPrimerOperando);
-				primerOperandoPrima.setResultado(".AUXCONV_" + this.contadorVariablesAuxiliaresConversion);
-				primerOperandoPrima.setTipo(tripla.getTipo());
-				this.agregarAuxiliarConversionTablaDeSimbolos(tripla.getTipo());
-				this.contadorVariablesAuxiliaresConversion++;
-				this.addTerceto(primerOperandoPrima);
-				expresionConOperando.setOperador1(primerOperandoPrima);
-				if(!tripla.getTipo().equals(EntradaTablaSimbolos.INT))
-				{
-					this.agregarAuxiliarTablaDeSimbolos(primerOperandoPrima, tercetoSegundoOperando, tripla.getTipo());
-					expresionConOperando.setResultado(".AUX_" + this.contadorVariablesAuxiliares);
-					this.contadorVariablesAuxiliares++;
-				}
-			}
-			if(!tripla.getConversionSegundoOperando().equals("-"))
-			{
-                TercetoOperandos segundoOperandoPrima = new TercetoOperandos(tripla.getConversionSegundoOperando(), tercetoSegundoOperando);
-				segundoOperandoPrima.setResultado(".AUXCONV_" + this.contadorVariablesAuxiliaresConversion);
-				segundoOperandoPrima.setTipo(tripla.getTipo());
-				this.agregarAuxiliarConversionTablaDeSimbolos(tripla.getTipo());
-				this.contadorVariablesAuxiliaresConversion++;
-				this.addTerceto(segundoOperandoPrima);
-				expresionConOperando.setOperador2(segundoOperandoPrima);
-				if(!tripla.getTipo().equals(EntradaTablaSimbolos.SINGLE))
-				{
-					this.agregarAuxiliarTablaDeSimbolos(tercetoPrimerOperando, segundoOperandoPrima, tripla.getTipo());
-					expresionConOperando.setResultado(".AUX_" + this.contadorVariablesAuxiliares);
-					this.contadorVariablesAuxiliares++;
-				}
-			}
-			this.addTerceto(expresionConOperando);
-			tipoPrimerOperando.setLength(0);
-			tipoPrimerOperando.append(tripla.getTipo());
-		}
+		
+		
+		this.addTerceto(expresionConOperando);
+
 		//*/
 		return expresionConOperando;
 	}
@@ -790,18 +796,25 @@ import java.util.*;
         
         TercetoOperandos conversionTercetoAritmetico = new TercetoOperandos("itos", tercetoAConvertir); // creamos el terceto
         conversionTercetoAritmetico.setResultado(".AUXCONV_" + this.contadorVariablesAuxiliaresConversion); 
-        conversionTercetoAritmetico.setTipo(tripla.getTipo());
+        conversionTercetoAritmetico.setTipo(EntradaTablaSimbolos.SINGLE);
 
-        this.agregarAuxiliarConversionTablaDeSimbolos(tripla.getTipo()); // Agregamos el auxiliar a la tabla de simbolos. 
+        this.agregarAuxiliarConversionTablaDeSimbolos(EntradaTablaSimbolos.SINGLE); // Agregamos el auxiliar a la tabla de simbolos. 
         this.contadorVariablesAuxiliaresConversion++;
 
         conversionTercetoAritmetico.setTipo(EntradaTablaSimbolos.SINGLE); // Seteamos el tipo al nuevo terceto 
         this.addTerceto(conversionTercetoAritmetico); // lo agregamos a la tabla 
 
         tipoTercetoAConvertir.setLength(0); // esto no estoy seguro, seria para cambiar el tipo de tipoExpresion.
-        tipoTercetoAConvertir.append(tripla.getTipo());
+        tipoTercetoAConvertir.append(EntradaTablaSimbolos.SINGLE);
 
 
         return conversionTercetoAritmetico;
       
   }
+
+  private void accionSemanticaComparador()
+	{
+		this.expresionPreComparador = this.expresion;
+		this.tipoExpresionPreComparador.setLength(0);
+		this.tipoExpresionPreComparador.append(this.tipoExpresion.toString());
+	}

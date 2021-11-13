@@ -83,7 +83,6 @@ public class AnalizadorLexico {
         String ambito = lexema.substring(primerPunto);
         int primerPuntoTabla = 0;
         EntradaTablaSimbolos atributosTablaDeSimbolos = null;
-        System.out.println("Buscando la variable " + nombreVariable + " Con ambito " + ambito);
         for(HashMap.Entry<String, EntradaTablaSimbolos> entry : this.tablaDeSimbolos.entrySet())
         {
             primerPuntoTabla = entry.getKey().indexOf(".");
@@ -99,7 +98,6 @@ public class AnalizadorLexico {
                     {
                         return atributosTablaDeSimbolos;
                     }
-                    System.out.println("ambito contenido para la variable  " + nombreVariableTabla + " Con ambito " + ambitoTabla);
                 }
 
             }
