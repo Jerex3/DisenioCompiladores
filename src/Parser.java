@@ -568,7 +568,7 @@ final static String yyrule[] = {
 "cte : '-' CTE",
 };
 
-//#line 544 "gramatica.y"
+//#line 547 "gramatica.y"
 
     private AnalizadorLexico al;
     private ArrayList<String> listaDeReglas = new ArrayList<String>();
@@ -576,6 +576,7 @@ final static String yyrule[] = {
     private ArrayList<String> listaErroresCodigoIntermedio = new ArrayList<String>();
 	private ArrayList<Terceto> listaExpresiones = new ArrayList<Terceto>();
 	private ArrayList<Terceto> listaTerminos = new ArrayList<Terceto>();
+
 
     private Stack<TercetoPosicion> pilaTercetos = new Stack<TercetoPosicion>();
 
@@ -608,8 +609,8 @@ final static String yyrule[] = {
 	private Terceto expresionPreComparador;
 	private TercetoOperandos condicion;
 	private TercetoOperandos TercetoSubcondicion;
-	private TercetoOperandos tercetoCondicion;
-	private TercetoOperandos tercetoComparacion;
+	private TercetoOperandos TercetoCondicion;
+	private TercetoOperandos TercetoComparacion;
 	private StringBuilder tipoFactor = new StringBuilder();
 	private StringBuilder tipoTermino = new StringBuilder();
 	private StringBuilder tipoExpresion = new StringBuilder();
@@ -846,7 +847,7 @@ final static String yyrule[] = {
 		this.tipoExpresionPreComparador.setLength(0);
 		this.tipoExpresionPreComparador.append(this.tipoExpresion.toString());
 	}
-//#line 778 "Parser.java"
+//#line 779 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -1317,29 +1318,32 @@ break;
 case 88:
 //#line 314 "gramatica.y"
 {
-                                                    TercetoOperandos ter = new TercetoOperandos("||", this.tercetoCondicion, TercetoSubcondicion );
+                                                    TercetoOperandos ter = new TercetoOperandos("||", this.TercetoCondicion, TercetoSubcondicion );
                                                     this.addTerceto(ter);
+                                                    this.TercetoCondicion = ter;
                                                  	   
                                                     }
 break;
 case 89:
-//#line 320 "gramatica.y"
-{this.tercetoCondicion = this.TercetoSubcondicion;}
+//#line 321 "gramatica.y"
+{this.TercetoCondicion = this.TercetoSubcondicion;
+
+                                                    }
 break;
 case 90:
-//#line 325 "gramatica.y"
+//#line 328 "gramatica.y"
 {
-                                                    TercetoOperandos ter = new TercetoOperandos("&&", TercetoSubcondicion, tercetoComparacion );
+                                                    TercetoOperandos ter = new TercetoOperandos("&&", TercetoSubcondicion, TercetoComparacion );
                                                     this.addTerceto(ter);
-                                                   
+                                                    this.TercetoSubcondicion = ter;
                                                 }
 break;
 case 91:
-//#line 331 "gramatica.y"
-{this.TercetoSubcondicion = this.tercetoComparacion;  }
+//#line 334 "gramatica.y"
+{this.TercetoSubcondicion = this.TercetoComparacion;  }
 break;
 case 92:
-//#line 336 "gramatica.y"
+//#line 339 "gramatica.y"
 {
                                                       TercetoOperandos ter = new TercetoOperandos(this.comparador, this.expresionPreComparador, this.expresion );
                                                             if(!this.tipoExpresionPreComparador.equals(this.tipoExpresion)){
@@ -1350,11 +1354,11 @@ case 92:
                                                                 ter.setTipo(this.tipoExpresion.toString());
                                                             }
                                                             this.addTerceto(ter);
-                                                            this.tercetoComparacion = ter;
+                                                            this.TercetoComparacion = ter;
                                                          }
 break;
 case 93:
-//#line 353 "gramatica.y"
+//#line 356 "gramatica.y"
 {this.expresion = crearTercetoOperandos("+", tipoExpresion, this.tipoTermino, this.expresion, this.termino);
         										  if(this.listaExpresiones.size() > 0) {
 														this.listaExpresiones.remove(this.listaExpresiones.size() - 1);
@@ -1365,7 +1369,7 @@ case 93:
         											}
 break;
 case 94:
-//#line 362 "gramatica.y"
+//#line 365 "gramatica.y"
 {this.expresion = crearTercetoOperandos("-", tipoExpresion, this.tipoTermino, this.expresion, this.termino);
                 								 if(this.listaExpresiones.size() > 0) {
 													 this.listaExpresiones.remove(this.listaExpresiones.size() - 1);
@@ -1377,7 +1381,7 @@ case 94:
         }
 break;
 case 95:
-//#line 372 "gramatica.y"
+//#line 375 "gramatica.y"
 {
                                     this.expresion = this.termino;
                                     this.tipoExpresion.setLength(0);
@@ -1390,7 +1394,7 @@ case 95:
                                    }
 break;
 case 96:
-//#line 389 "gramatica.y"
+//#line 392 "gramatica.y"
 {this.termino = crearTercetoOperandos("*", this.tipoTermino, this.tipoFactor, this.termino, this.factor);
                               		 if(this.listaTerminos.size() > 0) {
 										 this.listaTerminos.remove(this.listaTerminos.size() - 1);
@@ -1401,7 +1405,7 @@ case 96:
                                     }
 break;
 case 97:
-//#line 398 "gramatica.y"
+//#line 401 "gramatica.y"
 { this.termino = crearTercetoOperandos("/", this.tipoTermino, this.tipoFactor, this.termino, this.factor);
       								  if(this.listaTerminos.size() > 0) {
 										 this.listaTerminos.remove(this.listaTerminos.size() - 1);
@@ -1411,7 +1415,7 @@ case 97:
                                     }
 break;
 case 98:
-//#line 406 "gramatica.y"
+//#line 409 "gramatica.y"
 {this.termino = this.factor;
                                      this.tipoTermino.setLength(0);
                                      this.tipoTermino.append(this.tipoFactor.toString());
@@ -1420,7 +1424,7 @@ case 98:
                                     }
 break;
 case 99:
-//#line 417 "gramatica.y"
+//#line 420 "gramatica.y"
 {
             EntradaTablaSimbolos entrada = al.estaEnTablaSimbolos(val_peek(0).sval + ambitoActual);
 			if(entrada != null)
@@ -1439,7 +1443,7 @@ case 99:
         }
 break;
 case 100:
-//#line 434 "gramatica.y"
+//#line 437 "gramatica.y"
 {
 		       			 this.factor = this.conversionExplicita(this.tipoExpresion, this.expresion);
 		        		 this.tipoFactor.setLength(0);
@@ -1462,61 +1466,61 @@ case 100:
 				}
 break;
 case 102:
-//#line 458 "gramatica.y"
+//#line 461 "gramatica.y"
 {
 					  this.accionSemanticaComparador();
 					  this.comparador = ">";
 				  }
 break;
 case 103:
-//#line 463 "gramatica.y"
+//#line 466 "gramatica.y"
 {
 					  this.accionSemanticaComparador();
 					  this.comparador = "<";
 				 }
 break;
 case 104:
-//#line 468 "gramatica.y"
+//#line 471 "gramatica.y"
 {
 							this.accionSemanticaComparador();
 							this.comparador = "==";
 						}
 break;
 case 105:
-//#line 473 "gramatica.y"
+//#line 476 "gramatica.y"
 {
 								this.accionSemanticaComparador();
 								this.comparador = ">=";
 							  }
 break;
 case 106:
-//#line 478 "gramatica.y"
+//#line 481 "gramatica.y"
 {
 								this.accionSemanticaComparador();
 								this.comparador = "<=";
 							  }
 break;
 case 107:
-//#line 483 "gramatica.y"
+//#line 486 "gramatica.y"
 {
 						this.accionSemanticaComparador();
 						this.comparador = "!=";
 					  }
 break;
 case 111:
-//#line 502 "gramatica.y"
+//#line 505 "gramatica.y"
 {addReglaSintacticaReconocida(String.format("Invocacion a funcion reconocida en linea %1$d",al.getLinea()));}
 break;
 case 112:
-//#line 504 "gramatica.y"
+//#line 507 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ID en la invocacion a funcion en linea %1$d",al.getLinea()));}
 break;
 case 113:
-//#line 506 "gramatica.y"
+//#line 509 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ')' en la invocacion a funcion en linea %1$d",al.getLinea()));}
 break;
 case 114:
-//#line 511 "gramatica.y"
+//#line 514 "gramatica.y"
 {   EntradaTablaSimbolos entradaTablaSimbolos = al.getEntrada(val_peek(0).sval);
     														if (entradaTablaSimbolos.getTipo().equals(EntradaTablaSimbolos.INT)) {
     															   if ((Integer.parseInt(entradaTablaSimbolos.getLexema())) == AnalizadorLexico.MAX_INT_ABSOLUTO) {
@@ -1531,7 +1535,7 @@ case 114:
     													}
 break;
 case 115:
-//#line 524 "gramatica.y"
+//#line 527 "gramatica.y"
 {   EntradaTablaSimbolos entradaTablaSimbolos = al.getEntrada(val_peek(0).sval);
     															if (entradaTablaSimbolos.getTipo().equals(EntradaTablaSimbolos.INT)) {
 
@@ -1550,7 +1554,7 @@ case 115:
 
     														}
 break;
-//#line 1477 "Parser.java"
+//#line 1481 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

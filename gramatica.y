@@ -312,23 +312,26 @@ import java.util.*;
     condicion :
         condicion OR subcondicion
                                                     {
-                                                    TercetoOperandos ter = new TercetoOperandos("||", this.tercetoCondicion, TercetoSubcondicion );
+                                                    TercetoOperandos ter = new TercetoOperandos("||", this.TercetoCondicion, TercetoSubcondicion );
                                                     this.addTerceto(ter);
+                                                    this.TercetoCondicion = ter;
                                                  	   
                                                     }
         |
-        subcondicion								{this.tercetoCondicion = this.TercetoSubcondicion;}
+        subcondicion								{this.TercetoCondicion = this.TercetoSubcondicion;
+
+                                                    }
     ;
 
 
     subcondicion :
         subcondicion AND comparacion            {
-                                                    TercetoOperandos ter = new TercetoOperandos("&&", TercetoSubcondicion, tercetoComparacion );
+                                                    TercetoOperandos ter = new TercetoOperandos("&&", TercetoSubcondicion, TercetoComparacion );
                                                     this.addTerceto(ter);
-                                                   
+                                                    this.TercetoSubcondicion = ter;
                                                 }
         |
-        comparacion								{this.TercetoSubcondicion = this.tercetoComparacion;  }
+        comparacion								{this.TercetoSubcondicion = this.TercetoComparacion;  }
     ;
 
 
@@ -343,7 +346,7 @@ import java.util.*;
                                                                 ter.setTipo(this.tipoExpresion.toString());
                                                             }
                                                             this.addTerceto(ter);
-                                                            this.tercetoComparacion = ter;
+                                                            this.TercetoComparacion = ter;
                                                          }
                                                          		
     ;
@@ -549,6 +552,7 @@ comparador : '>'  {
 	private ArrayList<Terceto> listaExpresiones = new ArrayList<Terceto>();
 	private ArrayList<Terceto> listaTerminos = new ArrayList<Terceto>();
 
+
     private Stack<TercetoPosicion> pilaTercetos = new Stack<TercetoPosicion>();
 
 	private HashMap<String, ArrayList<TercetoOperandos>> hashDeTercetos = new HashMap<String, ArrayList<TercetoOperandos>>();
@@ -581,7 +585,7 @@ comparador : '>'  {
 	private TercetoOperandos condicion;
 	private TercetoOperandos TercetoSubcondicion;
 	private TercetoOperandos TercetoCondicion;
-	private TercetoOperandos tercetoComparacion;
+	private TercetoOperandos TercetoComparacion;
 	private StringBuilder tipoFactor = new StringBuilder();
 	private StringBuilder tipoTermino = new StringBuilder();
 	private StringBuilder tipoExpresion = new StringBuilder();
