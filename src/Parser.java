@@ -568,7 +568,7 @@ final static String yyrule[] = {
 "cte : '-' CTE",
 };
 
-//#line 547 "gramatica.y"
+//#line 553 "gramatica.y"
 
     private AnalizadorLexico al;
     private ArrayList<String> listaDeReglas = new ArrayList<String>();
@@ -601,6 +601,7 @@ final static String yyrule[] = {
 	private String variableIteraFor = "";
 	private int contadorVariablesAuxiliares = 1;
 	private int contadorVariablesAuxiliaresConversion = 1;
+	private String constante = "";
 
 	private Terceto factor;
 	private Terceto termino;
@@ -847,7 +848,7 @@ final static String yyrule[] = {
 		this.tipoExpresionPreComparador.setLength(0);
 		this.tipoExpresionPreComparador.append(this.tipoExpresion.toString());
 	}
-//#line 779 "Parser.java"
+//#line 780 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -1465,62 +1466,71 @@ case 100:
 						 
 				}
 break;
+case 101:
+//#line 458 "gramatica.y"
+{
+                                    this.factor =  new TercetoLexema(this.constante);
+                                    this.tipoFactor.setLength(0);
+                                    this.tipoFactor.append(al.getEntrada(this.constante).getTipo());
+
+                                }
+break;
 case 102:
-//#line 461 "gramatica.y"
+//#line 465 "gramatica.y"
 {
 					  this.accionSemanticaComparador();
 					  this.comparador = ">";
 				  }
 break;
 case 103:
-//#line 466 "gramatica.y"
+//#line 470 "gramatica.y"
 {
 					  this.accionSemanticaComparador();
 					  this.comparador = "<";
 				 }
 break;
 case 104:
-//#line 471 "gramatica.y"
+//#line 475 "gramatica.y"
 {
 							this.accionSemanticaComparador();
 							this.comparador = "==";
 						}
 break;
 case 105:
-//#line 476 "gramatica.y"
+//#line 480 "gramatica.y"
 {
 								this.accionSemanticaComparador();
 								this.comparador = ">=";
 							  }
 break;
 case 106:
-//#line 481 "gramatica.y"
+//#line 485 "gramatica.y"
 {
 								this.accionSemanticaComparador();
 								this.comparador = "<=";
 							  }
 break;
 case 107:
-//#line 486 "gramatica.y"
+//#line 490 "gramatica.y"
 {
 						this.accionSemanticaComparador();
 						this.comparador = "!=";
 					  }
 break;
 case 111:
-//#line 505 "gramatica.y"
+//#line 509 "gramatica.y"
 {addReglaSintacticaReconocida(String.format("Invocacion a funcion reconocida en linea %1$d",al.getLinea()));}
 break;
 case 112:
-//#line 507 "gramatica.y"
+//#line 511 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ID en la invocacion a funcion en linea %1$d",al.getLinea()));}
 break;
 case 113:
-//#line 509 "gramatica.y"
+//#line 513 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ')' en la invocacion a funcion en linea %1$d",al.getLinea()));}
 break;
 case 114:
-//#line 514 "gramatica.y"
+//#line 518 "gramatica.y"
 {   EntradaTablaSimbolos entradaTablaSimbolos = al.getEntrada(val_peek(0).sval);
     														if (entradaTablaSimbolos.getTipo().equals(EntradaTablaSimbolos.INT)) {
     															   if ((Integer.parseInt(entradaTablaSimbolos.getLexema())) == AnalizadorLexico.MAX_INT_ABSOLUTO) {
@@ -1531,11 +1541,12 @@ case 114:
     																			al.getTablaDeSimbolos().put(entradaTablaSimbolos.getLexema(), entradaTablaSimbolos);
     																}
     														  }
+    														  this.constante = entradaTablaSimbolos.getLexema();
 
     													}
 break;
 case 115:
-//#line 527 "gramatica.y"
+//#line 532 "gramatica.y"
 {   EntradaTablaSimbolos entradaTablaSimbolos = al.getEntrada(val_peek(0).sval);
     															if (entradaTablaSimbolos.getTipo().equals(EntradaTablaSimbolos.INT)) {
 
@@ -1551,10 +1562,11 @@ case 115:
     																	entradaTablaSimbolos.setLexema(nuevoLexema);
     																	al.getTablaDeSimbolos().put(entradaTablaSimbolos.getLexema(), entradaTablaSimbolos);
     															  }
+    															  this.constante = entradaTablaSimbolos.getLexema();
 
     														}
 break;
-//#line 1481 "Parser.java"
+//#line 1491 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

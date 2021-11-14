@@ -455,7 +455,12 @@ import java.util.*;
 						 
 				}
         |
-        cte
+        cte                     {
+                                    this.factor =  new TercetoLexema(this.constante);
+                                    this.tipoFactor.setLength(0);
+                                    this.tipoFactor.append(al.getEntrada(this.constante).getTipo());
+                                }
+
     ;
 
 comparador : '>'  {
@@ -521,6 +526,7 @@ comparador : '>'  {
     																			al.getTablaDeSimbolos().put(entradaTablaSimbolos.getLexema(), entradaTablaSimbolos);
     																}
     														  }
+    														  this.constante = entradaTablaSimbolos.getLexema();
 
     													}
             |
@@ -539,6 +545,7 @@ comparador : '>'  {
     																	entradaTablaSimbolos.setLexema(nuevoLexema);
     																	al.getTablaDeSimbolos().put(entradaTablaSimbolos.getLexema(), entradaTablaSimbolos);
     															  }
+    															  this.constante = entradaTablaSimbolos.getLexema();
 
     														}
     ;
@@ -576,6 +583,7 @@ comparador : '>'  {
 	private String variableIteraFor = "";
 	private int contadorVariablesAuxiliares = 1;
 	private int contadorVariablesAuxiliaresConversion = 1;
+	private String constante = "";
 
 	private Terceto factor;
 	private Terceto termino;

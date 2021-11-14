@@ -34,7 +34,7 @@ public class AsFinSingle implements AccionSemantica {
             }
         }
 
-        a.addListaDeTokens(String.format("CTE Double %2$s (linea %1$d)", a.getLinea(), String.valueOf(tempDouble)));
+        a.addListaDeTokens(String.format("CTE SINGLE %2$s (linea %1$d)", a.getLinea(), String.valueOf(tempDouble)));
         a.setTokenActual(a.getIDforPalabra("CTE"));
 
         if (a.estaEnTabla(String.valueOf(tempDouble))) {

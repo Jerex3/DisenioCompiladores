@@ -7,35 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f9b0a41-55bf-4370-9204-ce23159e6eae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Fuente.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Fuente.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gramatica.y" beforeDir="false" afterPath="$PROJECT_DIR$/gramatica.y" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AccionSemantica.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AccionSemantica.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AnalizadorLexico.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AnalizadorLexico.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsErrorLexico.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsErrorLexico.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinCadena.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinCadena.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinComentario.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinComentario.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinEntero.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinEntero.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinIdentificador.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinIdentificador.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinSimbolo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinSimbolo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinSingle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinSingle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsIncremento.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsIncremento.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsOmitir.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsOmitir.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsWarningSalto.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsWarningSalto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/CambioEstado.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/CambioEstado.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/EntradaTablaSimbolos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/EntradaTablaSimbolos.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/LectorMatrizAS.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/LectorMatrizAS.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/LectorMatrizTE.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/LectorMatrizTE.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Parser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Parser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/ParserVal.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/ParserVal.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Reader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Reader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Terceto.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Terceto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/TercetoLexema.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/TercetoLexema.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/TercetoOperandos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/TercetoOperandos.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/TercetoPosicion.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/TercetoPosicion.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Tripla.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Tripla.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AsFinSingle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AsFinSingle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -53,20 +27,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gramatica.y">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-51">
-              <caret line="316" column="58" selection-start-line="316" selection-start-column="58" selection-end-line="316" selection-end-column="58" />
+            <state relative-caret-position="-781">
+              <caret line="244" column="21" lean-forward="true" selection-start-line="244" selection-start-column="21" selection-end-line="244" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Fuente.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+            <state relative-caret-position="102">
+              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Parser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="196">
+              <caret line="1472" selection-start-line="1472" selection-end-line="1473" selection-end-column="100" />
             </state>
           </provider>
         </entry>
@@ -74,7 +57,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EntradaTablaSimbolos.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
+            <state relative-caret-position="459">
               <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
             </state>
           </provider>
@@ -83,20 +66,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1428">
+            <state relative-caret-position="339">
               <caret line="87" column="54" selection-start-line="87" selection-start-column="54" selection-end-line="87" selection-end-column="54" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AnalizadorLexico.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4250">
-              <caret line="281" selection-start-line="281" selection-end-line="281" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -115,8 +86,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ErrorFEO</find>
-      <find>Error</find>
       <find>funcion</find>
       <find>entra</find>
       <find>entradaTabla</find>
@@ -145,6 +114,8 @@
       <find>tabladecon</find>
       <find>crear</find>
       <find>inici</find>
+      <find>cte</find>
+      <find>getEntr</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -164,11 +135,11 @@
         <option value="$PROJECT_DIR$/src/AsFinCadena.java" />
         <option value="$PROJECT_DIR$/src/AsFinEntero.java" />
         <option value="$PROJECT_DIR$/src/AsFinIdentificador.java" />
-        <option value="$PROJECT_DIR$/src/AsFinSingle.java" />
         <option value="$PROJECT_DIR$/src/EntradaTablaSimbolos.java" />
         <option value="$PROJECT_DIR$/src/AnalizadorLexico.java" />
         <option value="$PROJECT_DIR$/src/TercetoOperandos.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
+        <option value="$PROJECT_DIR$/src/AsFinSingle.java" />
         <option value="$PROJECT_DIR$/src/Parser.java" />
         <option value="$PROJECT_DIR$/gramatica.y" />
         <option value="$PROJECT_DIR$/Fuente.txt" />
@@ -193,6 +164,11 @@
             <path>
               <item name="DisenioCompiladores" type="b2602c69:ProjectViewProjectNode" />
               <item name="DisenioCompiladores" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DisenioCompiladores" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DisenioCompiladores" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -271,12 +247,12 @@
       <workItem from="1636580751355" duration="8546000" />
       <workItem from="1636665231561" duration="4034000" />
       <workItem from="1636671858674" duration="951000" />
-      <workItem from="1636844867356" duration="1009000" />
+      <workItem from="1636844867356" duration="3398000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66871000" />
+    <option name="totallyTimeSpent" value="69260000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -289,6 +265,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.107908845" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -299,7 +276,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32892805" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5330396" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.6431718" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39941263" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -443,13 +420,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AsFinSingle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="44" column="140" selection-start-line="44" selection-start-column="140" selection-end-line="44" selection-end-column="140" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AsIncremento.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -492,13 +462,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/TercetoLexema.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/TercetoPosicion.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -510,33 +473,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
           <caret line="108" column="9" lean-forward="true" selection-start-line="108" selection-start-column="9" selection-end-line="108" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1428">
-          <caret line="87" column="54" selection-start-line="87" selection-start-column="54" selection-end-line="87" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AnalizadorLexico.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4250">
-          <caret line="281" selection-start-line="281" selection-end-line="281" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/EntradaTablaSimbolos.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -558,24 +494,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Parser.java">
+    <entry file="file://$PROJECT_DIR$/src/EntradaTablaSimbolos.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="1322" column="56" selection-start-line="1322" selection-start-column="56" selection-end-line="1322" selection-end-column="56" />
+        <state relative-caret-position="459">
+          <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gramatica.y">
+    <entry file="file://$PROJECT_DIR$/src/AsFinSingle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-51">
-          <caret line="316" column="58" selection-start-line="316" selection-start-column="58" selection-end-line="316" selection-end-column="58" />
+        <state relative-caret-position="291">
+          <caret line="44" column="126" selection-start-line="44" selection-start-column="98" selection-end-line="44" selection-end-column="126" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TercetoLexema.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AnalizadorLexico.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="281" lean-forward="true" selection-start-line="281" selection-end-line="281" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="87" column="54" selection-start-line="87" selection-start-column="54" selection-end-line="87" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="1472" selection-start-line="1472" selection-end-line="1473" selection-end-column="100" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Fuente.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+        <state relative-caret-position="102">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gramatica.y">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-781">
+          <caret line="244" column="21" lean-forward="true" selection-start-line="244" selection-start-column="21" selection-end-line="244" selection-end-column="21" />
         </state>
       </provider>
     </entry>
