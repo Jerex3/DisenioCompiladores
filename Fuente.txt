@@ -1,18 +1,13 @@
 INT var4, var2, var3, var5, var1, variablemuerta;
-INT FUNC (INT) varFunc;
+SINGLE varchota;
+INT FUNC ( INT ) choclo, sandia;
+INT FUNC PAPAFRITA(SINGLE ketchup)  
+	BEGIN
+		var2 := var2;
+		RETURN (var3);
+		POST : (var3 == 1), %pepe%;
+	END;
 BEGIN
+ 	var2 := PAPAFRITA(varchota) + varchota;
  	
-	var1 := 1523;
- 	WHILE (var2 + var3 > 5) DO
- 		BEGIN
-		  	IF(3 > var2) THEN 
-				
-					var5 := 5;
-				
-		 	ENDIF;
- 	
- 			var2 := var2 * var1;
- 			var3 := var3 + 1;
- 		END;
- 	var2 := var1;
 END

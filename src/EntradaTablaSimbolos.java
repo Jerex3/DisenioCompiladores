@@ -9,7 +9,8 @@ public class EntradaTablaSimbolos {
 
     private String lexema;
     private String tipo;
-
+    private String parametro;
+    private String tipoParametro;
     private String uso; //nombre de variable, nombre de procedimimento, nombre de parámetro
     private Integer naContenidos;
     private int lineaDeclaracion;
@@ -110,5 +111,21 @@ public class EntradaTablaSimbolos {
         }
         return copiaLista;
     }
+
+	public String getParametro() {
+		return parametro;
+	}
+
+	public void setParametro(String parametro) {
+		this.parametro = parametro;
+	}
+
+	public String getTipoParametro() {
+		return tipoParametro;
+	}
+
+	public void setTipoParametro(String tipoParametro) {
+		this.tipoParametro = tipoParametro;
+	}
 
 }

@@ -58,7 +58,7 @@ import java.util.*;
 
 
     listaVariables :
-        identificador                             {String lex = renombrarLexema();
+        identificador                             { String lex = renombrarLexema();
                                                     EntradaTablaSimbolos en = al.getEntrada(lex);
                                                     en.setTipo(this.ultimoTipo);
                                                     }
@@ -71,24 +71,47 @@ import java.util.*;
         listaVariables error identificador        {addErrorSintactico(String.format("Falta una ',' en linea %1$d",al.getLinea()));}
     ;
 
-
+	    listaVariablesFuncion :
+        identificador                               { 
+        												this.listaVariablesFuncion = new ArrayList<String>();
+        												this.listaVariablesFuncion.add($1.sval);
+                                                    }
+        |
+        listaVariablesFuncion ',' identificador          {
+        													this.listaVariablesFuncion.add($3.sval);
+                                                    		
+                                                    	 }
+        |
+        listaVariablesFuncion error identificador        {addErrorSintactico(String.format("Falta una ',' en linea %1$d",al.getLinea()));}
+    ;
+	
     identificador :
         ID
     ;
-
-
+	
+	
+	
     declaracionEncabezadoFuncion :
-        tipo FUNC '(' tipo ')' listaVariables ';'       {addReglaSintacticaReconocida(String.format("Declaracion encabezado funcion reconocida en linea %1$d",al.getLinea()));}
+        tipoFuncion FUNC '(' tipo ')' listaVariablesFuncion ';'       {
+        																addReglaSintacticaReconocida(String.format("Declaracion encabezado funcion reconocida en linea %1$d",al.getLinea()));
+        																	for(String lex : this.listaVariablesFuncion){
+        																		EntradaTablaSimbolos ent = al.getEntrada(lex);
+        																		ent.setTipo(this.ultimoTipoFuncion);
+        																		ent.setTipoParametro(this.ultimoTipo);
+        																		String lexNuevo = renombrarLexemaParametro(lex);
+        																		
+        																	}
+        															  }
         |
-        tipo FUNC error tipo ')' listaVariables ';'     {addErrorSintactico(String.format("Falta un '(' en la declaracion del encabezado funcion en linea %1$d",al.getLinea()));}
+        tipoFuncion FUNC error tipo ')' listaVariablesFuncion ';'     {addErrorSintactico(String.format("Falta un '(' en la declaracion del encabezado funcion en linea %1$d",al.getLinea()));}
         |
-        tipo FUNC '(' error ')' listaVariables ';'      {addErrorSintactico(String.format("Falta un tipo entre los parentesis en la declaracion del encabezado funcion en linea %1$d",al.getLinea()));}
+        tipoFuncion FUNC '(' error ')' listaVariablesFuncion ';'      {addErrorSintactico(String.format("Falta un tipo entre los parentesis en la declaracion del encabezado funcion en linea %1$d",al.getLinea()));}
         |
-        tipo FUNC '(' tipo error listaVariables ';'     {addErrorSintactico(String.format("Falta un ')' en la declaracion del encabezado funcion en linea %1$d",al.getLinea()));}
+        tipoFuncion FUNC '(' tipo error listaVariablesFuncion ';'     {addErrorSintactico(String.format("Falta un ')' en la declaracion del encabezado funcion en linea %1$d",al.getLinea()));}
         |
-        tipo FUNC '(' tipo ')' error ';'                {addErrorSintactico(String.format("Faltan los nombre de las variables en la declaracion del encabezado funcion en linea %1$d",al.getLinea()));}
+        tipoFuncion FUNC '(' tipo ')' error ';'                {addErrorSintactico(String.format("Faltan los nombre de las variables en la declaracion del encabezado funcion en linea %1$d",al.getLinea()));}
         |
-        tipo FUNC '(' tipo ')' listaVariables error     {addErrorSintactico(String.format("Falta un ';' en la declaracion del encabezado funcion en linea %1$d",al.getLinea()));}
+        tipoFuncion FUNC '(' tipo ')' listaVariablesFuncion error     {addErrorSintactico(String.format("Falta un ';' en la declaracion del encabezado funcion en linea %1$d",al.getLinea()));}
 
     ;
 
@@ -106,10 +129,18 @@ import java.util.*;
 
 
     finFuncion :
-        retorno ';' postcondicion ';'
+        retorno ';' postcondicion ';'           {
+        											TercetoOperandos tercetoBI = (TercetoOperandos) this.pilaTercetoFinFuncion.pop();
+        											TercetoOperandos finFuncion = new TercetoOperandos("finfuncion");
+        											tercetoBI.setOperador1(finFuncion);
+        											this.addTerceto(finFuncion);
+        										}
         |
-        retorno ';'
-        |
+        retorno ';'								{
+       												TercetoOperandos finFuncion = new TercetoOperandos("finfuncion");
+        											this.addTerceto(finFuncion);
+        										}
+        |	
         retorno error postcondicion ';'         {addErrorSintactico(String.format("Falta un ';' en el fin de la funcion en linea %1$d",al.getLinea()));}
         |
         retorno ';' postcondicion error         {addErrorSintactico(String.format("Falta un ';' en el fin de la funcion en linea %1$d",al.getLinea()));}
@@ -119,7 +150,7 @@ import java.util.*;
 
 
     encabezadoFuncion :
-        tipo FUNC ID '(' parametro ')'
+        tipoFuncion FUNC ID '(' parametro ')'
         {
            String lexema;
            EntradaTablaSimbolos esRedeclarada = this.al.esRedeclarada($3.sval + this.ambitoActual);
@@ -141,26 +172,45 @@ import java.util.*;
            {
                EntradaTablaSimbolos atributos = this.al.getEntrada(lexema);
                atributos.setUso("nombre de procedimiento");
-               atributos.setNaContenidos(0);
+               atributos.setTipo(this.ultimoTipoFuncion);
            }
            this.ambitoActual = this.ambitoActual + this.ultimoAmbito;
+           EntradaTablaSimbolos param = al.getEntrada(this.lexemaParametro);
+           param.setLexema(this.lexemaParametro + this.ambitoActual);
+           param.setTipo(this.tipoParametro);
+           al.cambiarClave(this.lexemaParametro, this.lexemaParametro + this.ambitoActual);
+           this.al.getEntrada(lexema).setParametro(param.getLexema());
+           
         }
 
         |
-        tipo FUNC ID error parametro ')'        {addErrorSintactico(String.format("Falta un '(' en el encabezado de la funcion en linea %1$d",al.getLinea()));}
+        tipoFuncion FUNC ID error parametro ')'        {addErrorSintactico(String.format("Falta un '(' en el encabezado de la funcion en linea %1$d",al.getLinea()));}
         |
-        tipo FUNC ID '(' error ')'              {addErrorSintactico(String.format("Falta el parametro en el encabezado de la funcion en linea %1$d",al.getLinea()));}
+        tipoFuncion FUNC ID '(' error ')'              {addErrorSintactico(String.format("Falta el parametro en el encabezado de la funcion en linea %1$d",al.getLinea()));}
         |
-        tipo FUNC ID '(' parametro error        {addErrorSintactico(String.format("Falta un ')' en el encabezado de la funcion en linea %1$d",al.getLinea()));}
+        tipoFuncion FUNC ID '(' parametro error        {addErrorSintactico(String.format("Falta un ')' en el encabezado de la funcion en linea %1$d",al.getLinea()));}
     ;
 
-
+	tipoFuncion : tipo {this.ultimoTipoFuncion = this.ultimoTipo;}
+	;
     parametro :
-        tipo ID
+        tipo ID {
+        			this.tipoParametro = this.ultimoTipo;
+        			this.lexemaParametro = $2.sval;
+        		}
     ;
 
     retorno :
-        RETURN '(' expresionSimple ')'      {addReglaSintacticaReconocida(String.format("Retorno reconocido en linea %1$d",al.getLinea()));}
+        RETURN '(' expresionSimple ')'      {
+									        	addReglaSintacticaReconocida(String.format("Retorno reconocido en linea %1$d",al.getLinea()));
+									        	String lexemaFuncionActual = this.ambitoActual.substring(this.ambitoActual.lastIndexOf(".") + 1, this.ambitoActual.length()) +  this.ambitoActual.substring(0, this.ambitoActual.lastIndexOf("."));
+									        	String tipoFuncionActual = al.getEntrada(lexemaFuncionActual).getTipo();
+									        	if(!tipoFuncionActual.equals(this.tipoExpresion)){
+									        		this.addErrorSintactico("El tipo de la funcion" + lexemaFuncionActual + " es " + tipoFuncionActual + " y se intenta retornar " + this.tipoExpresion);
+									        	}
+									        	TercetoOperandos tercetoRetorno = new TercetoOperandos("retorno", this.expresion);
+									        	this.addTerceto(tercetoRetorno);
+									        }
         |
         RETURN error expresionSimple ')'    {addErrorSintactico(String.format("Falta un '(' en el retorno de la funcion en linea %1$d",al.getLinea()));}
         |
@@ -171,7 +221,19 @@ import java.util.*;
 
 
     postcondicion :
-        POST ':' '(' condicion ')' ',' CADENA           {addReglaSintacticaReconocida(String.format("Postcondicion reconocida en linea %1$d",al.getLinea()));}
+        POST ':' '(' condicion ')' ',' CADENA           {
+    														addReglaSintacticaReconocida(String.format("Postcondicion reconocida en linea %1$d",al.getLinea()));
+    														TercetoOperandos print = new TercetoOperandos("print", new TercetoLexema($7.sval));
+    														TercetoOperandos fin = new TercetoOperandos("fin");
+    														
+    														TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion, print);
+    													    this.addTerceto(tercetoBF);
+    													    TercetoOperandos tercetoBI = new TercetoOperandos("BI");
+    													   	this.pilaTercetoFinFuncion.push(tercetoBI);
+    														this.addTerceto(tercetoBI);
+    														this.addTerceto(print);
+    														this.addTerceto(fin);
+    													}
         |
         POST error '(' condicion ')' ',' CADENA       {addErrorSintactico(String.format("Falta un ':' en la postcondicion de la funcion en linea %1$d",al.getLinea()));}
         |
@@ -233,9 +295,9 @@ import java.util.*;
                               }        
         
         |
-        identificador error expresionCompleta ';'               {addErrorSintactico(String.format("Falta la asignacion en linea %1$d",al.getLinea()));}
+        identificador error expresionSimple ';'               {addErrorSintactico(String.format("Falta la asignacion en linea %1$d",al.getLinea()));}
         |
-        identificador ASIGNACION expresionCompleta error        {addErrorSintactico(String.format("Falta un ';' en linea %1$d",al.getLinea()));}
+        identificador ASIGNACION expresionSimple error        {addErrorSintactico(String.format("Falta un ';' en linea %1$d",al.getLinea()));}
     ;
 
 
@@ -358,7 +420,11 @@ import java.util.*;
                     }
     ;
     sentenciaPrint :
-        PRINT '(' CADENA ')' ';'                          {addReglaSintacticaReconocida(String.format("Sentencia print reconocida en linea %1$d",al.getLinea()));}
+        PRINT '(' CADENA ')' ';'                          {
+													        addReglaSintacticaReconocida(String.format("Sentencia print reconocida en linea %1$d",al.getLinea()));
+													        TercetoOperandos terPrint = new TercetoOperandos("print", new TercetoLexema($3.sval));
+													        this.addTerceto(terPrint);
+													       }
         |
         PRINT error CADENA ')' ';'                        {addErrorSintactico(String.format("Falta un '(' en la sentencia print en linea %1$d",al.getLinea()));}
         |
@@ -557,20 +623,45 @@ comparador : '>'  {
 					  }
            
            ; 
-    expresionCompleta :
-        invocacionFuncion
-        |
-        expresionSimple
-        |        
-        CADENA 
-    ;
+ 
 
 
 
 
 
     invocacionFuncion :
-        ID '(' ID ')'                   {addReglaSintacticaReconocida(String.format("Invocacion a funcion reconocida en linea %1$d",al.getLinea()));}
+        ID '(' ID ')'                   {
+        								    addReglaSintacticaReconocida(String.format("Invocacion a funcion reconocida en linea %1$d",al.getLinea()));
+                                            EntradaTablaSimbolos entradaFuncion = al.estaEnTablaSimbolos($1.sval + this.ambitoActual);
+                                            EntradaTablaSimbolos entradaParametro = al.estaEnTablaSimbolos($3.sval + this.ambitoActual);
+											EntradaTablaSimbolos entradaParametroFormal = al.getEntrada(entradaFuncion.getParametro());
+											String lexemaFuncion;
+                                            if(entradaFuncion != null){
+                                            	lexemaFuncion = entradaFuncion.getLexema();
+                                                if(entradaParametro != null){
+                                                    if(!entradaParametro.getTipo().equals(entradaParametroFormal.getTipo())){
+                                                    	this.addErrorCodigoIntermedio("Se intenta llamar a la funcion " + $1.sval + " Con el tipo " + entradaParametro.getTipo() + " Pero usa " + entradaParametroFormal.getTipo());
+                                                    } 
+                                                    else {
+                                                    	TercetoOperandos tercetoParametro = new TercetoOperandos(":=", new TercetoLexema(entradaParametroFormal.getLexema()), new TercetoLexema(entradaParametro.getLexema()));
+                                             			tercetoParametro.setTipo(entradaParametroFormal.getTipo());
+                                             			this.addTerceto(tercetoParametro);
+                                                    }
+                                                } else {
+												   this.addErrorCodigoIntermedio("La variable " + $3.sval + " no esta definida en el ambito actual");
+														
+                                                }                                   
+                                            } else {
+												this.addErrorCodigoIntermedio("La funcion " + $1.sval + " no esta definida en el ambito actual");
+												lexemaFuncion = "Funcion no definida";						
+                                            }
+        									
+        									TercetoOperandos tercetoInvocacion = new TercetoOperandos("call", new TercetoLexema(lexemaFuncion)); 
+        									tercetoInvocacion.setTipo(entradaFuncion.getTipo());
+        									this.factor = tercetoInvocacion;
+        									this.addTerceto(tercetoInvocacion);
+        									
+    									}
         |
         ID '(' error ')'               {addErrorSintactico(String.format("Falta un ID en la invocacion a funcion en linea %1$d",al.getLinea()));}
         |
@@ -624,7 +715,11 @@ comparador : '>'  {
 
 
     private Stack<TercetoPosicion> pilaTercetos = new Stack<TercetoPosicion>();
-
+    private Stack<TercetoPosicion> pilaTercetoFinFuncion = new Stack<TercetoPosicion>();
+	
+    private ArrayList<String> listaVariablesFuncion = new ArrayList<String>();
+	
+	
 	private HashMap<String, ArrayList<TercetoOperandos>> hashDeTercetos = new HashMap<String, ArrayList<TercetoOperandos>>();
 	private HashMap<String, Tripla> tablaDeConversionDeTiposSumaRestaComp = new HashMap<String, Tripla>();
 	private HashMap<String, Tripla> tablaDeConversionDeTiposMult = new HashMap<String, Tripla>();
@@ -635,11 +730,15 @@ comparador : '>'  {
 
     private String tipo = "";
     private String ultimoTipo = "";
+    private String ultimoTipoFuncion;
 	private String ultimaFuncion = ".main";
 	private String ultimoAmbito = ".main";
 	private String ambitoActual = ".main";
-	private int cantParametros = 0;
-	//private boolean shadowing = false;
+	
+	private String tipoParametro;
+	private String lexemaParametro;
+		
+		
 	private String formaPasaje =  "copia valor";
 	private int cantidadProcedimientosAnidados = -1;
 	private String comparador = "";
@@ -758,7 +857,25 @@ comparador : '>'  {
 	    }
 	    return lexema;
     }
-
+ 	public String renombrarLexemaParametro(String lex){
+		String lexema;
+	    EntradaTablaSimbolos esRedeclarada = this.al.esRedeclarada(lex + this.ambitoActual);
+	    if(esRedeclarada != null)
+	    {
+			this.addErrorCodigoIntermedio("Variable " + lex + " redeclarada. La variable ya fue declarado en la linea: " + esRedeclarada.getLineaDeclaracion() + ".");
+		    lexema = "#REDECLARADA" + lex + this.ambitoActual;
+	    }
+	    else
+	    {
+			lexema = lex + this.ambitoActual;
+	    }
+	    this.al.cambiarClave(lex, lexema);
+	    if(al.estaEnTabla(lexema))
+	    {
+		    this.al.getEntrada(lexema).setUso("variable encabezado funcion");
+	    }
+	    return lexema;
+    }
 	private void finDeFuncion()
 	{
 		/*
