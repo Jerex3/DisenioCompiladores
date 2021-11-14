@@ -206,7 +206,7 @@ import java.util.*;
 
 
     asignacion :
-        identificador ASIGNACION expresionCompleta ';'          
+        identificador ASIGNACION expresionSimple ';'
                                 { 
 								 EntradaTablaSimbolos estaEnTablaSimbolos = this.al.estaEnTablaSimbolos($1.sval + this.ambitoActual);
                                  if(estaEnTablaSimbolos != null) {  
@@ -515,6 +515,8 @@ import java.util.*;
 							
 						 
 				}
+		|
+		invocacionFuncion       {}
         |
         cte                     {
                                     this.factor =  new TercetoLexema(this.constante);

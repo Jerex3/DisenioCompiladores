@@ -7,10 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f9b0a41-55bf-4370-9204-ce23159e6eae" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Fuente.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Fuente.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gramatica.y" beforeDir="false" afterPath="$PROJECT_DIR$/gramatica.y" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AsFinSingle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AsFinSingle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,8 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gramatica.y">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-781">
-              <caret line="244" column="21" lean-forward="true" selection-start-line="244" selection-start-column="21" selection-end-line="244" selection-end-column="21" />
+            <state relative-caret-position="425">
+              <caret line="573" column="9" lean-forward="true" selection-start-line="573" selection-start-column="9" selection-end-line="573" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -39,8 +36,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Fuente.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+            <state>
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
             </state>
           </provider>
         </entry>
@@ -48,8 +45,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Parser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="196">
-              <caret line="1472" selection-start-line="1472" selection-end-line="1473" selection-end-column="100" />
+            <state relative-caret-position="25738">
+              <caret line="1543" selection-start-line="1543" selection-end-line="1543" />
             </state>
           </provider>
         </entry>
@@ -57,7 +54,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EntradaTablaSimbolos.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
+            <state relative-caret-position="816">
               <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
             </state>
           </provider>
@@ -66,7 +63,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
+            <state relative-caret-position="1428">
               <caret line="87" column="54" selection-start-line="87" selection-start-column="54" selection-end-line="87" selection-end-column="54" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -86,10 +83,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>funcion</find>
-      <find>entra</find>
-      <find>entradaTabla</find>
-      <find>#</find>
       <find>estaEnTabla</find>
       <find>lexico</find>
       <find>getEnt</find>
@@ -116,6 +109,10 @@
       <find>inici</find>
       <find>cte</find>
       <find>getEntr</find>
+      <find>asignacion</find>
+      <find>expresionCompleta</find>
+      <find>factor</find>
+      <find>invocacionFuncion</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -141,8 +138,8 @@
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/AsFinSingle.java" />
         <option value="$PROJECT_DIR$/src/Parser.java" />
-        <option value="$PROJECT_DIR$/gramatica.y" />
         <option value="$PROJECT_DIR$/Fuente.txt" />
+        <option value="$PROJECT_DIR$/gramatica.y" />
       </list>
     </option>
   </component>
@@ -156,8 +153,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -248,11 +245,12 @@
       <workItem from="1636665231561" duration="4034000" />
       <workItem from="1636671858674" duration="951000" />
       <workItem from="1636844867356" duration="3398000" />
+      <workItem from="1636900977297" duration="1912000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69260000" />
+    <option name="totallyTimeSpent" value="71172000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -267,7 +265,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.107908845" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.10924933" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -476,31 +474,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#68483#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ParserVal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#1202#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/EntradaTablaSimbolos.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Parser.java" />
+    <entry file="file://$PROJECT_DIR$/ParserVal.java" />
     <entry file="file://$PROJECT_DIR$/src/AsFinSingle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="291">
@@ -525,34 +500,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
+    <entry file="file://$PROJECT_DIR$/gramatica.y">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="87" column="54" selection-start-line="87" selection-start-column="54" selection-end-line="87" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="1472" selection-start-line="1472" selection-end-line="1473" selection-end-column="100" />
+        <state relative-caret-position="425">
+          <caret line="573" column="9" lean-forward="true" selection-start-line="573" selection-start-column="9" selection-end-line="573" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Fuente.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        <state>
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gramatica.y">
+    <entry file="file://$PROJECT_DIR$/src/Parser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-781">
-          <caret line="244" column="21" lean-forward="true" selection-start-line="244" selection-start-column="21" selection-end-line="244" selection-end-column="21" />
+        <state relative-caret-position="25738">
+          <caret line="1543" selection-start-line="1543" selection-end-line="1543" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EntradaTablaSimbolos.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="816">
+          <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1428">
+          <caret line="87" column="54" selection-start-line="87" selection-start-column="54" selection-end-line="87" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
