@@ -240,14 +240,26 @@ import java.util.*;
 
 
     sentenciaIf :
-        encabezadoIf cuerpoIf ';'                           {addReglaSintacticaReconocida(String.format("Sentencia if reconocida en linea %1$d",al.getLinea()));}
+        encabezadoIf cuerpoIf ';'                           {
+                                                                addReglaSintacticaReconocida(String.format("Sentencia if reconocida en linea %1$d",al.getLinea()));                                                                                                      
+                                                                TercetoOperandos tercetoBI = (TercetoOperandos) this.pilaTercetos.pop();
+                                                                int numeroDestino = this.numeroTercetos + 1;
+                                                                tercetoBI.setOperador1(new TercetoPosicion(numeroDestino));
+                                                                TercetoOperandos etiqueta = new TercetoOperandos("Label_" + numeroDestino);
+                                                                this.addTerceto(etiqueta);
+													  
+                                                            }
         |
         encabezadoIf cuerpoIf error                           {addErrorSintactico(String.format("Falta un ';' en linea %1$d",al.getLinea()));}
     ;
 
 
     encabezadoIf :
-        IF '(' condicion ')'
+        IF '(' condicion ')'                        {	
+                                                        TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
+								                    	this.addTerceto(tercetoBF);
+                                                        this.pilaTercetos.push(tercetoBF);
+                                                    }
         |
         IF error condicion ')'                      {addErrorSintactico(String.format("Falta un '(' en el encabezado del if en linea %1$d",al.getLinea()));}
         |
@@ -257,21 +269,42 @@ import java.util.*;
     ;
 
     cuerpoIf :
-        THEN bloqueSentencias ENDIF
+        THEN cuerpoThen ENDIF
         |
-        THEN bloqueSentencias ELSE bloqueSentencias ENDIF
+        THEN cuerpoThen elseNT cuerpoElse ENDIF
         |
-        error bloqueSentencias ENDIF                             {addErrorSintactico(String.format("Falta un THEN en el cuerpo del if en linea %1$d",al.getLinea()));}
+        error cuerpoThen ENDIF                             {addErrorSintactico(String.format("Falta un THEN en el cuerpo del if en linea %1$d",al.getLinea()));}
         |
-        THEN bloqueSentencias error                                 {addErrorSintactico(String.format("Falta un ENDIF en el cuerpo del if en linea %1$d",al.getLinea()));}
+        THEN cuerpoThen error                                 {addErrorSintactico(String.format("Falta un ENDIF en el cuerpo del if en linea %1$d",al.getLinea()));}
         |
-        error bloqueSentencias ELSE bloqueSentencias ENDIF           {addErrorSintactico(String.format("Falta un THEN en el cuerpo del if en linea %1$d",al.getLinea()));}
+        error cuerpoThen elseNT cuerpoElse ENDIF           {addErrorSintactico(String.format("Falta un THEN en el cuerpo del if en linea %1$d",al.getLinea()));}
         |
-        THEN bloqueSentencias error bloqueSentencias ENDIF               {addErrorSintactico(String.format("Falta un ELSE en el cuerpo del if en linea %1$d",al.getLinea()));}
+        THEN cuerpoThen error cuerpoElse ENDIF               {addErrorSintactico(String.format("Falta un ELSE en el cuerpo del if en linea %1$d",al.getLinea()));}
         |
-        THEN bloqueSentencias ELSE bloqueSentencias error               {addErrorSintactico(String.format("Falta un ENDIF en el cuerpo del if en linea %1$d",al.getLinea()));}
+        THEN cuerpoThen elseNT cuerpoElse error               {addErrorSintactico(String.format("Falta un ENDIF en el cuerpo del if en linea %1$d",al.getLinea()));}
     ;
 
+    cuerpoThen : 
+        bloqueSentencias              {
+										   TercetoOperandos tercetoBF = (TercetoOperandos) this.pilaTercetos.pop();
+										   int numeroDestino = this.numeroTercetos + 2;
+										   tercetoBF.setOperador2(new TercetoPosicion(numeroDestino));
+										   TercetoOperandos tercetoBI = new TercetoOperandos("BI");
+										   this.addTerceto(tercetoBI);
+										   this.pilaTercetos.push(tercetoBI);
+									   }
+    
+    ;
+
+    elseNT: ELSE {
+                    int numeroDestino = this.numeroTercetos + 1;
+					TercetoOperandos etiqueta = new TercetoOperandos("Label_" + numeroDestino);
+					this.addTerceto(etiqueta);
+                 }
+    ;
+
+    cuerpoElse :
+        bloqueSentencias              {System.out.println("HOLA");};
 
     bloqueSentencias :
         sentenciaEjecutable
@@ -284,18 +317,46 @@ import java.util.*;
     ;
 
     sentenciaWhile :
-        WHILE '(' condicion ')' DO bloqueSentencias         {addReglaSintacticaReconocida(String.format("Sentencia while reconocida en linea %1$d",al.getLinea()));}
+        whileNT condicionWhile DO bloqueSentencias         {
+                                                                addReglaSintacticaReconocida(String.format("Sentencia while reconocida en linea %1$d",al.getLinea()));
+                                                                TercetoOperandos tercetoBF = (TercetoOperandos) this.pilaTercetos.pop();                                                              
+                                                                tercetoBF.setOperador2(new TercetoPosicion(this.numeroTercetos + 2));
+
+                                                                TercetoPosicion posicionBI = (TercetoPosicion) this.pilaTercetos.pop();
+
+                                                                TercetoOperandos TercetoBI = new TercetoOperandos("BI", posicionBI);
+                                                                this.addTerceto(TercetoBI);
+
+                                                            }        
         |
-        WHILE error condicion ')' DO bloqueSentencias         {addErrorSintactico(String.format("Falta un '(' en la sentencia while en linea %1$d",al.getLinea()));}
-        |
-        WHILE '(' error ')' DO bloqueSentencias             {addErrorSintactico(String.format("Falta la condicion en la sentencia while en linea %1$d",al.getLinea()));}
-        |
-        WHILE '(' condicion error DO bloqueSentencias       {addErrorSintactico(String.format("Falta un ')' en la sentencia while en linea %1$d",al.getLinea()));}
-        |
-        WHILE '(' condicion ')' error bloqueSentencias     {addErrorSintactico(String.format("Falta un DO en la sentencia while en linea %1$d",al.getLinea()));}
+        whileNT condicionWhile error bloqueSentencias     {addErrorSintactico(String.format("Falta un DO en la sentencia while en linea %1$d",al.getLinea()));}
     ;
 
+    condicionWhile :
+        '(' condicion ')'{
+                            TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
+                            this.addTerceto(tercetoBF);
+                            this.pilaTercetos.push(tercetoBF);
+                         }
+        |
+        '(' error ')' {addErrorSintactico(String.format("Falta la condicion en la sentencia while en linea %1$d",al.getLinea()));}
+        |
+        '(' condicion error  {addErrorSintactico(String.format("Falta un ')' en la sentencia while en linea %1$d",al.getLinea()));}
+        |
+        error condicion ')'  {addErrorSintactico(String.format("Falta un '(' en la sentencia while en linea %1$d",al.getLinea()));}
+        ;
 
+    ;
+
+    whileNT : WHILE {
+    					int incremento = 1;
+    					if(!this.hashDeTercetos.containsKey(this.ambitoActual)){
+    						incremento = 2;
+    					} 
+                        TercetoPosicion posicion = new TercetoPosicion(this.numeroTercetos + incremento);
+                        this.pilaTercetos.push(posicion);
+                    }
+    ;
     sentenciaPrint :
         PRINT '(' CADENA ')' ';'                          {addReglaSintacticaReconocida(String.format("Sentencia print reconocida en linea %1$d",al.getLinea()));}
         |
