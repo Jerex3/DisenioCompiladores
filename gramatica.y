@@ -99,7 +99,7 @@ import java.util.*;
         																		ent.setTipo(this.ultimoTipoFuncion);
         																		ent.setTipoParametro(this.ultimoTipo);
         																		String lexNuevo = renombrarLexemaParametro(lex);
-        																		
+        																		ent.setUsao("funcion");
         																	}
         															  }
         |
@@ -269,31 +269,64 @@ import java.util.*;
 
     asignacion :
         identificador ASIGNACION expresionSimple ';'
-                                { 
-								 EntradaTablaSimbolos estaEnTablaSimbolos = this.al.estaEnTablaSimbolos($1.sval + this.ambitoActual);
-                                 if(estaEnTablaSimbolos != null) {  
-                                	 
-   									 this.asignacion = new TercetoOperandos(":=",new TercetoLexema(estaEnTablaSimbolos.getLexema()), this.expresion);
-   									 
-                                	 if(!this.tipoExpresion.equals(estaEnTablaSimbolos.getTipo())) {
-     									this.addErrorCodigoIntermedio("No es posible realizar la asignacion por incompatibilidad de tipos");
-     									this.asignacion.setTipo(EntradaTablaSimbolos.SINGLE);
-                                	 } else {
-      									this.asignacion.setTipo(estaEnTablaSimbolos.getTipo());
-                                	 }
-                                	 
-                        
-								 } else { 									
-									this.addErrorCodigoIntermedio(": La variable '" + $3.sval + "' en el ámbito actual no fue declarada.'");
-  									 this.asignacion = new TercetoOperandos(":=",new TercetoLexema("VariableNoEncontrada"), this.expresion);
+                                {
+                                if(hayFunc){
+                                    hayFunc = false;
+                                    EntradaTablaSimbolos entFun = al.getEntrada(lexemaVarFunc);
 
-								 }
-                                 
-                            	 this.addTerceto(asignacion);
-                            	 this.tipoAsignacion = asignacion.getTipo();
-								 this.al.bajaTablaDeSimbolos($3.sval);
-                              }        
-        
+                                     EntradaTablaSimbolos estaEnTablaSimbolos = this.al.estaEnTablaSimbolos($1.sval + this.ambitoActual);
+                                     if(estaEnTablaSimbolos != null) {
+
+                                         this.asignacion = new TercetoOperandos(":=",new TercetoLexema(estaEnTablaSimbolos.getLexema()), this.expresion);
+
+                                         if(enFun.getUso().equals(estaEnTablaSimbolos.getUso()) && enFun.getTipoParametro().equals(estaEnTablaSimbolos.getTipoParametro())) {
+                                            //this.asignacion.setTipo(estaEnTablaSimbolos.getTipo());
+                                            //ACA
+                                         } else {
+
+                                            this.addErrorCodigoIntermedio("No es posible realizar la asignacion por incompatibilidad de tipos");
+                                            this.asignacion.setTipo(EntradaTablaSimbolos.SINGLE);
+                                         }
+
+
+                                     } else {
+                                        this.addErrorCodigoIntermedio(": La variable '" + $1.sval + "' en el ámbito actual no fue declarada.'");
+                                         this.asignacion = new TercetoOperandos(":=",new TercetoLexema("VariableNoEncontrada"), this.expresion);
+
+                                     }
+
+                                     this.addTerceto(asignacion);
+                                     this.tipoAsignacion = asignacion.getTipo();
+                                     this.al.bajaTablaDeSimbolos($1.sval);
+
+                                }
+
+                                else{
+                                     EntradaTablaSimbolos estaEnTablaSimbolos = this.al.estaEnTablaSimbolos($1.sval + this.ambitoActual);
+                                     if(estaEnTablaSimbolos != null) {
+
+                                         this.asignacion = new TercetoOperandos(":=",new TercetoLexema(estaEnTablaSimbolos.getLexema()), this.expresion);
+
+                                         if(!this.tipoExpresion.equals(estaEnTablaSimbolos.getTipo())) {
+                                            this.addErrorCodigoIntermedio("No es posible realizar la asignacion por incompatibilidad de tipos");
+                                            this.asignacion.setTipo(EntradaTablaSimbolos.SINGLE);
+                                         } else {
+                                            this.asignacion.setTipo(estaEnTablaSimbolos.getTipo());
+                                         }
+
+
+                                     } else {
+                                        this.addErrorCodigoIntermedio(": La variable '" + $1.sval + "' en el ámbito actual no fue declarada.'");
+                                         this.asignacion = new TercetoOperandos(":=",new TercetoLexema("VariableNoEncontrada"), this.expresion);
+
+                                     }
+
+                                     this.addTerceto(asignacion);
+                                     this.tipoAsignacion = asignacion.getTipo();
+                                     this.al.bajaTablaDeSimbolos($1.sval);
+                                 }
+
+                                  }
         |
         identificador error expresionSimple ';'               {addErrorSintactico(String.format("Falta la asignacion en linea %1$d",al.getLinea()));}
         |
@@ -474,6 +507,10 @@ import java.util.*;
                                                             }
                                                             this.addTerceto(ter);
                                                             this.TercetoComparacion = ter;
+                                                             if(hayFunc){
+                                                                this.addErrorCodigoIntermedio("Se esta usando el identificador de una funcion en una expresion.");
+                                                                hayFunc = false;
+                                                             }
                                                          }
                                                          		
     ;
@@ -486,7 +523,10 @@ import java.util.*;
 												  }
 												 
         										  this.listaExpresiones.add(this.expresion);
-        							
+                                                 if(hayFunc){
+                                                    this.addErrorCodigoIntermedio("Se esta usando el identificador de una funcion en una expresion.");
+                                                    hayFunc = false;
+                                                 }
         											}
         |
         expresionSimple '-' termino             {this.expresion = crearTercetoOperandos("-", tipoExpresion, this.tipoTermino, this.expresion, this.termino);
@@ -496,7 +536,10 @@ import java.util.*;
 											  
                                                  this.listaExpresiones.add(this.expresion);
                                                  
-        
+                                                 if(hayFunc){
+                                                    this.addErrorCodigoIntermedio("Se esta usando el identificador de una funcion en una expresion.");
+                                                    hayFunc = false;
+                                                 }
         }
         |
         termino                    {
@@ -521,7 +564,12 @@ import java.util.*;
 										 this.listaTerminos.remove(this.listaTerminos.size() - 1);
 									  }
                                    	
-                                   	 this.listaTerminos.add(this.termino);	
+                                   	 this.listaTerminos.add(this.termino);
+
+                                   	 if(hayFunc){
+                                   	    this.addErrorCodigoIntermedio("Se esta usando el identificador de una funcion en una expresion.");
+                                   	    hayFunc = false;
+                                   	 }
                                    	
                                     }
         |
@@ -530,7 +578,13 @@ import java.util.*;
 										 this.listaTerminos.remove(this.listaTerminos.size() - 1);
 									  }
                                    	
-                                   	  this.listaTerminos.add(this.termino);	
+                                   	  this.listaTerminos.add(this.termino);
+
+                                     if(hayFunc){
+                                        this.addErrorCodigoIntermedio("Se esta usando el identificador de una funcion en una expresion.");
+                                        hayFunc = false;
+                                     }
+
                                     }
         |
         factor                      {this.termino = this.factor;
@@ -553,6 +607,8 @@ import java.util.*;
 				this.factor = new TercetoLexema(lexema);
 				this.tipoFactor.setLength(0);
 				this.tipoFactor.append(entrada.getTipo());
+
+				if(entrada.getUso().equals("funcion")) {hayFunc = true; lexemaVarFunc = lexema;}
 		    }
 			else
 			  {
@@ -737,7 +793,9 @@ comparador : '>'  {
 	
 	private String tipoParametro;
 	private String lexemaParametro;
-		
+
+	private boolean hayFunc = false;
+	private String lexemaVarFunc ="";
 		
 	private String formaPasaje =  "copia valor";
 	private int cantidadProcedimientosAnidados = -1;
