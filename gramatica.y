@@ -99,7 +99,7 @@ import java.util.*;
         																		ent.setTipo(this.ultimoTipoFuncion);
         																		ent.setTipoParametro(this.ultimoTipo);
         																		String lexNuevo = renombrarLexemaParametro(lex);
-        																		ent.setUsao("funcion");
+        																		ent.setUso("funcion");
         																	}
         															  }
         |
@@ -131,8 +131,10 @@ import java.util.*;
     finFuncion :
         retorno ';' postcondicion ';'           {
         											TercetoOperandos tercetoBI = (TercetoOperandos) this.pilaTercetoFinFuncion.pop();
+        											TercetoOperandos etiqueta = new TercetoOperandos("Label_" + (this.numeroTercetos + 1));
         											TercetoOperandos finFuncion = new TercetoOperandos("finfuncion");
-        											tercetoBI.setOperador1(finFuncion);
+        											tercetoBI.setOperador1(etiqueta);
+        											this.addTerceto(etiqueta);       										
         											this.addTerceto(finFuncion);
         										}
         |
@@ -226,11 +228,19 @@ import java.util.*;
     														TercetoOperandos print = new TercetoOperandos("print", new TercetoLexema($7.sval));
     														TercetoOperandos fin = new TercetoOperandos("fin");
     														
-    														TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion, print);
+    														TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
     													    this.addTerceto(tercetoBF);
+    													    
     													    TercetoOperandos tercetoBI = new TercetoOperandos("BI");
     													   	this.pilaTercetoFinFuncion.push(tercetoBI);
+    													   	
     														this.addTerceto(tercetoBI);
+    													
+     														TercetoOperandos etiqueta = new TercetoOperandos("Label_" + ( this.numeroTercetos + 1));
+                                                            this.addTerceto(etiqueta);		
+                                                            
+                                                            tercetoBF.setOperador2(etiqueta);		
+                                                            							
     														this.addTerceto(print);
     														this.addTerceto(fin);
     													}
@@ -279,7 +289,7 @@ import java.util.*;
 
                                          this.asignacion = new TercetoOperandos(":=",new TercetoLexema(estaEnTablaSimbolos.getLexema()), this.expresion);
 
-                                         if(enFun.getUso().equals(estaEnTablaSimbolos.getUso()) && enFun.getTipoParametro().equals(estaEnTablaSimbolos.getTipoParametro())) {
+                                         if(entFun.getUso().equals(estaEnTablaSimbolos.getUso()) && entFun.getTipoParametro().equals(estaEnTablaSimbolos.getTipoParametro())) {
                                             //this.asignacion.setTipo(estaEnTablaSimbolos.getTipo());
                                             //ACA
                                          } else {
@@ -414,13 +424,22 @@ import java.util.*;
     sentenciaWhile :
         whileNT condicionWhile DO bloqueSentencias         {
                                                                 addReglaSintacticaReconocida(String.format("Sentencia while reconocida en linea %1$d",al.getLinea()));
-                                                                TercetoOperandos tercetoBF = (TercetoOperandos) this.pilaTercetos.pop();                                                              
-                                                                tercetoBF.setOperador2(new TercetoPosicion(this.numeroTercetos + 2));
-
+                                                                TercetoOperandos tercetoBF = (TercetoOperandos) this.pilaTercetos.pop();   
+                                                                
+                                                                
+                                                                //
+                                                                
+                                                                //
+                                                                
+                                                                int numeroDestino = this.numeroTercetos + 2;                                	                          
+                                                                tercetoBF.setOperador2(new TercetoPosicion(numeroDestino));
+																
                                                                 TercetoPosicion posicionBI = (TercetoPosicion) this.pilaTercetos.pop();
 
                                                                 TercetoOperandos TercetoBI = new TercetoOperandos("BI", posicionBI);
                                                                 this.addTerceto(TercetoBI);
+                                                                TercetoOperandos etiqueta = new TercetoOperandos("Label_" + numeroDestino);
+                                                                this.addTerceto(etiqueta);
 
                                                             }        
         |
@@ -448,7 +467,10 @@ import java.util.*;
     					if(!this.hashDeTercetos.containsKey(this.ambitoActual)){
     						incremento = 2;
     					} 
-                        TercetoPosicion posicion = new TercetoPosicion(this.numeroTercetos + incremento);
+    					int numeroDestino = this.numeroTercetos + incremento;
+						TercetoOperandos etiqueta = new TercetoOperandos("Label_" + numeroDestino);
+						this.addTerceto(etiqueta);
+                        TercetoPosicion posicion = new TercetoPosicion(numeroDestino);
                         this.pilaTercetos.push(posicion);
                     }
     ;

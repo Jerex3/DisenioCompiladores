@@ -575,7 +575,7 @@ final static String yyrule[] = {
 "cte : '-' CTE",
 };
 
-//#line 708 "gramatica.y"
+//#line 786 "gramatica.y"
 
     private AnalizadorLexico al;
     private ArrayList<String> listaDeReglas = new ArrayList<String>();
@@ -608,7 +608,9 @@ final static String yyrule[] = {
 	
 	private String tipoParametro;
 	private String lexemaParametro;
-		
+
+	private boolean hayFunc = false;
+	private String lexemaVarFunc ="";
 		
 	private String formaPasaje =  "copia valor";
 	private int cantidadProcedimientosAnidados = -1;
@@ -881,7 +883,7 @@ final static String yyrule[] = {
 		this.tipoExpresionPreComparador.setLength(0);
 		this.tipoExpresionPreComparador.append(this.tipoExpresion.toString());
 	}
-//#line 813 "Parser.java"
+//#line 815 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -1116,7 +1118,7 @@ case 24:
         																		ent.setTipo(this.ultimoTipoFuncion);
         																		ent.setTipoParametro(this.ultimoTipo);
         																		String lexNuevo = renombrarLexemaParametro(lex);
-        																		
+        																		ent.setUso("funcion");
         																	}
         															  }
 break;
@@ -1161,32 +1163,34 @@ case 34:
 //#line 132 "gramatica.y"
 {
         											TercetoOperandos tercetoBI = (TercetoOperandos) this.pilaTercetoFinFuncion.pop();
+        											TercetoOperandos etiqueta = new TercetoOperandos("Label_" + (this.numeroTercetos + 1));
         											TercetoOperandos finFuncion = new TercetoOperandos("finfuncion");
-        											tercetoBI.setOperador1(finFuncion);
+        											tercetoBI.setOperador1(etiqueta);
+        											this.addTerceto(etiqueta);       										
         											this.addTerceto(finFuncion);
         										}
 break;
 case 35:
-//#line 139 "gramatica.y"
+//#line 141 "gramatica.y"
 {
        												TercetoOperandos finFuncion = new TercetoOperandos("finfuncion");
         											this.addTerceto(finFuncion);
         										}
 break;
 case 36:
-//#line 144 "gramatica.y"
-{addErrorSintactico(String.format("Falta un ';' en el fin de la funcion en linea %1$d",al.getLinea()));}
-break;
-case 37:
 //#line 146 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ';' en el fin de la funcion en linea %1$d",al.getLinea()));}
 break;
-case 38:
+case 37:
 //#line 148 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ';' en el fin de la funcion en linea %1$d",al.getLinea()));}
 break;
+case 38:
+//#line 150 "gramatica.y"
+{addErrorSintactico(String.format("Falta un ';' en el fin de la funcion en linea %1$d",al.getLinea()));}
+break;
 case 39:
-//#line 154 "gramatica.y"
+//#line 156 "gramatica.y"
 {
            String lexema;
            EntradaTablaSimbolos esRedeclarada = this.al.esRedeclarada(val_peek(3).sval + this.ambitoActual);
@@ -1220,30 +1224,30 @@ case 39:
         }
 break;
 case 40:
-//#line 187 "gramatica.y"
+//#line 189 "gramatica.y"
 {addErrorSintactico(String.format("Falta un '(' en el encabezado de la funcion en linea %1$d",al.getLinea()));}
 break;
 case 41:
-//#line 189 "gramatica.y"
+//#line 191 "gramatica.y"
 {addErrorSintactico(String.format("Falta el parametro en el encabezado de la funcion en linea %1$d",al.getLinea()));}
 break;
 case 42:
-//#line 191 "gramatica.y"
+//#line 193 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ')' en el encabezado de la funcion en linea %1$d",al.getLinea()));}
 break;
 case 43:
-//#line 194 "gramatica.y"
+//#line 196 "gramatica.y"
 {this.ultimoTipoFuncion = this.ultimoTipo;}
 break;
 case 44:
-//#line 197 "gramatica.y"
+//#line 199 "gramatica.y"
 {
         			this.tipoParametro = this.ultimoTipo;
         			this.lexemaParametro = val_peek(0).sval;
         		}
 break;
 case 45:
-//#line 204 "gramatica.y"
+//#line 206 "gramatica.y"
 {
 									        	addReglaSintacticaReconocida(String.format("Retorno reconocido en linea %1$d",al.getLinea()));
 									        	String lexemaFuncionActual = this.ambitoActual.substring(this.ambitoActual.lastIndexOf(".") + 1, this.ambitoActual.length()) +  this.ambitoActual.substring(0, this.ambitoActual.lastIndexOf("."));
@@ -1256,94 +1260,136 @@ case 45:
 									        }
 break;
 case 46:
-//#line 215 "gramatica.y"
+//#line 217 "gramatica.y"
 {addErrorSintactico(String.format("Falta un '(' en el retorno de la funcion en linea %1$d",al.getLinea()));}
 break;
 case 47:
-//#line 217 "gramatica.y"
+//#line 219 "gramatica.y"
 {addErrorSintactico(String.format("Falta una expresion en el retorno de la funcion en linea %1$d",al.getLinea()));}
 break;
 case 48:
-//#line 219 "gramatica.y"
+//#line 221 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ')' en el retorno de la funcion en linea %1$d",al.getLinea()));}
 break;
 case 49:
-//#line 224 "gramatica.y"
+//#line 226 "gramatica.y"
 {
     														addReglaSintacticaReconocida(String.format("Postcondicion reconocida en linea %1$d",al.getLinea()));
     														TercetoOperandos print = new TercetoOperandos("print", new TercetoLexema(val_peek(0).sval));
     														TercetoOperandos fin = new TercetoOperandos("fin");
     														
-    														TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion, print);
+    														TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
     													    this.addTerceto(tercetoBF);
+    													    
     													    TercetoOperandos tercetoBI = new TercetoOperandos("BI");
     													   	this.pilaTercetoFinFuncion.push(tercetoBI);
+    													   	
     														this.addTerceto(tercetoBI);
+    													
+     														TercetoOperandos etiqueta = new TercetoOperandos("Label_" + ( this.numeroTercetos + 1));
+                                                            this.addTerceto(etiqueta);		
+                                                            
+                                                            tercetoBF.setOperador2(etiqueta);		
+                                                            							
     														this.addTerceto(print);
     														this.addTerceto(fin);
     													}
 break;
 case 50:
-//#line 238 "gramatica.y"
+//#line 248 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ':' en la postcondicion de la funcion en linea %1$d",al.getLinea()));}
 break;
 case 51:
-//#line 240 "gramatica.y"
+//#line 250 "gramatica.y"
 {addErrorSintactico(String.format("Falta un '(' en la postcondicion de la funcion en linea %1$d",al.getLinea()));}
 break;
 case 52:
-//#line 242 "gramatica.y"
+//#line 252 "gramatica.y"
 {addErrorSintactico(String.format("Falta la condicion en la postcondicion de la funcion en linea %1$d",al.getLinea()));}
 break;
 case 53:
-//#line 244 "gramatica.y"
+//#line 254 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ')' en la postcondicion de la funcion en linea %1$d",al.getLinea()));}
 break;
 case 54:
-//#line 246 "gramatica.y"
+//#line 256 "gramatica.y"
 {addErrorSintactico(String.format("Falta una ',' en la postcondicion de la funcion en linea %1$d",al.getLinea()));}
 break;
 case 55:
-//#line 248 "gramatica.y"
+//#line 258 "gramatica.y"
 {addErrorSintactico(String.format("Falta la cadena en la postcondicion de la funcion en linea %1$d",al.getLinea()));}
 break;
 case 62:
-//#line 272 "gramatica.y"
-{ 
-								 EntradaTablaSimbolos estaEnTablaSimbolos = this.al.estaEnTablaSimbolos(val_peek(3).sval + this.ambitoActual);
-                                 if(estaEnTablaSimbolos != null) {  
-                                	 
-   									 this.asignacion = new TercetoOperandos(":=",new TercetoLexema(estaEnTablaSimbolos.getLexema()), this.expresion);
-   									 
-                                	 if(!this.tipoExpresion.equals(estaEnTablaSimbolos.getTipo())) {
-     									this.addErrorCodigoIntermedio("No es posible realizar la asignacion por incompatibilidad de tipos");
-     									this.asignacion.setTipo(EntradaTablaSimbolos.SINGLE);
-                                	 } else {
-      									this.asignacion.setTipo(estaEnTablaSimbolos.getTipo());
-                                	 }
-                                	 
-                        
-								 } else { 									
-									this.addErrorCodigoIntermedio(": La variable '" + val_peek(1).sval + "' en el ámbito actual no fue declarada.'");
-  									 this.asignacion = new TercetoOperandos(":=",new TercetoLexema("VariableNoEncontrada"), this.expresion);
+//#line 282 "gramatica.y"
+{
+                                if(hayFunc){
+                                    hayFunc = false;
+                                    EntradaTablaSimbolos entFun = al.getEntrada(lexemaVarFunc);
 
-								 }
-                                 
-                            	 this.addTerceto(asignacion);
-                            	 this.tipoAsignacion = asignacion.getTipo();
-								 this.al.bajaTablaDeSimbolos(val_peek(1).sval);
-                              }
+                                     EntradaTablaSimbolos estaEnTablaSimbolos = this.al.estaEnTablaSimbolos(val_peek(3).sval + this.ambitoActual);
+                                     if(estaEnTablaSimbolos != null) {
+
+                                         this.asignacion = new TercetoOperandos(":=",new TercetoLexema(estaEnTablaSimbolos.getLexema()), this.expresion);
+
+                                         if(entFun.getUso().equals(estaEnTablaSimbolos.getUso()) && entFun.getTipoParametro().equals(estaEnTablaSimbolos.getTipoParametro())) {
+                                            /*this.asignacion.setTipo(estaEnTablaSimbolos.getTipo());*/
+                                            /*ACA*/
+                                         } else {
+
+                                            this.addErrorCodigoIntermedio("No es posible realizar la asignacion por incompatibilidad de tipos");
+                                            this.asignacion.setTipo(EntradaTablaSimbolos.SINGLE);
+                                         }
+
+
+                                     } else {
+                                        this.addErrorCodigoIntermedio(": La variable '" + val_peek(3).sval + "' en el ámbito actual no fue declarada.'");
+                                         this.asignacion = new TercetoOperandos(":=",new TercetoLexema("VariableNoEncontrada"), this.expresion);
+
+                                     }
+
+                                     this.addTerceto(asignacion);
+                                     this.tipoAsignacion = asignacion.getTipo();
+                                     this.al.bajaTablaDeSimbolos(val_peek(3).sval);
+
+                                }
+
+                                else{
+                                     EntradaTablaSimbolos estaEnTablaSimbolos = this.al.estaEnTablaSimbolos(val_peek(3).sval + this.ambitoActual);
+                                     if(estaEnTablaSimbolos != null) {
+
+                                         this.asignacion = new TercetoOperandos(":=",new TercetoLexema(estaEnTablaSimbolos.getLexema()), this.expresion);
+
+                                         if(!this.tipoExpresion.equals(estaEnTablaSimbolos.getTipo())) {
+                                            this.addErrorCodigoIntermedio("No es posible realizar la asignacion por incompatibilidad de tipos");
+                                            this.asignacion.setTipo(EntradaTablaSimbolos.SINGLE);
+                                         } else {
+                                            this.asignacion.setTipo(estaEnTablaSimbolos.getTipo());
+                                         }
+
+
+                                     } else {
+                                        this.addErrorCodigoIntermedio(": La variable '" + val_peek(3).sval + "' en el ámbito actual no fue declarada.'");
+                                         this.asignacion = new TercetoOperandos(":=",new TercetoLexema("VariableNoEncontrada"), this.expresion);
+
+                                     }
+
+                                     this.addTerceto(asignacion);
+                                     this.tipoAsignacion = asignacion.getTipo();
+                                     this.al.bajaTablaDeSimbolos(val_peek(3).sval);
+                                 }
+
+                                  }
 break;
 case 63:
-//#line 298 "gramatica.y"
+//#line 341 "gramatica.y"
 {addErrorSintactico(String.format("Falta la asignacion en linea %1$d",al.getLinea()));}
 break;
 case 64:
-//#line 300 "gramatica.y"
+//#line 343 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ';' en linea %1$d",al.getLinea()));}
 break;
 case 65:
-//#line 305 "gramatica.y"
+//#line 348 "gramatica.y"
 {
                                                                 addReglaSintacticaReconocida(String.format("Sentencia if reconocida en linea %1$d",al.getLinea()));                                                                                                      
                                                                 TercetoOperandos tercetoBI = (TercetoOperandos) this.pilaTercetos.pop();
@@ -1355,11 +1401,11 @@ case 65:
                                                             }
 break;
 case 66:
-//#line 315 "gramatica.y"
+//#line 358 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ';' en linea %1$d",al.getLinea()));}
 break;
 case 67:
-//#line 320 "gramatica.y"
+//#line 363 "gramatica.y"
 {	
                                                         TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
 								                    	this.addTerceto(tercetoBF);
@@ -1367,39 +1413,39 @@ case 67:
                                                     }
 break;
 case 68:
-//#line 326 "gramatica.y"
+//#line 369 "gramatica.y"
 {addErrorSintactico(String.format("Falta un '(' en el encabezado del if en linea %1$d",al.getLinea()));}
 break;
 case 69:
-//#line 328 "gramatica.y"
+//#line 371 "gramatica.y"
 {addErrorSintactico(String.format("Falta la condicion en el encabezado del if en linea %1$d",al.getLinea()));}
 break;
 case 70:
-//#line 330 "gramatica.y"
+//#line 373 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ')' en el encabezado del if en linea %1$d",al.getLinea()));}
 break;
 case 73:
-//#line 338 "gramatica.y"
+//#line 381 "gramatica.y"
 {addErrorSintactico(String.format("Falta un THEN en el cuerpo del if en linea %1$d",al.getLinea()));}
 break;
 case 74:
-//#line 340 "gramatica.y"
+//#line 383 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ENDIF en el cuerpo del if en linea %1$d",al.getLinea()));}
 break;
 case 75:
-//#line 342 "gramatica.y"
+//#line 385 "gramatica.y"
 {addErrorSintactico(String.format("Falta un THEN en el cuerpo del if en linea %1$d",al.getLinea()));}
 break;
 case 76:
-//#line 344 "gramatica.y"
+//#line 387 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ELSE en el cuerpo del if en linea %1$d",al.getLinea()));}
 break;
 case 77:
-//#line 346 "gramatica.y"
+//#line 389 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ENDIF en el cuerpo del if en linea %1$d",al.getLinea()));}
 break;
 case 78:
-//#line 350 "gramatica.y"
+//#line 393 "gramatica.y"
 {
 										   TercetoOperandos tercetoBF = (TercetoOperandos) this.pilaTercetos.pop();
 										   int numeroDestino = this.numeroTercetos + 2;
@@ -1410,7 +1456,7 @@ case 78:
 									   }
 break;
 case 79:
-//#line 361 "gramatica.y"
+//#line 404 "gramatica.y"
 {
                     int numeroDestino = this.numeroTercetos + 1;
 					TercetoOperandos etiqueta = new TercetoOperandos("Label_" + numeroDestino);
@@ -1418,37 +1464,46 @@ case 79:
                  }
 break;
 case 80:
-//#line 369 "gramatica.y"
+//#line 412 "gramatica.y"
 {System.out.println("HOLA");}
 break;
 case 83:
-//#line 376 "gramatica.y"
+//#line 419 "gramatica.y"
 {addErrorSintactico(String.format("Falta un END en linea %1$d",al.getLinea()));}
 break;
 case 84:
-//#line 378 "gramatica.y"
+//#line 421 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ';' en linea %1$d",al.getLinea()));}
 break;
 case 85:
-//#line 382 "gramatica.y"
+//#line 425 "gramatica.y"
 {
                                                                 addReglaSintacticaReconocida(String.format("Sentencia while reconocida en linea %1$d",al.getLinea()));
-                                                                TercetoOperandos tercetoBF = (TercetoOperandos) this.pilaTercetos.pop();                                                              
-                                                                tercetoBF.setOperador2(new TercetoPosicion(this.numeroTercetos + 2));
-
+                                                                TercetoOperandos tercetoBF = (TercetoOperandos) this.pilaTercetos.pop();   
+                                                                
+                                                                
+                                                                /**/
+                                                                
+                                                                /**/
+                                                                
+                                                                int numeroDestino = this.numeroTercetos + 2;                                	                          
+                                                                tercetoBF.setOperador2(new TercetoPosicion(numeroDestino));
+																
                                                                 TercetoPosicion posicionBI = (TercetoPosicion) this.pilaTercetos.pop();
 
                                                                 TercetoOperandos TercetoBI = new TercetoOperandos("BI", posicionBI);
                                                                 this.addTerceto(TercetoBI);
+                                                                TercetoOperandos etiqueta = new TercetoOperandos("Label_" + numeroDestino);
+                                                                this.addTerceto(etiqueta);
 
                                                             }
 break;
 case 86:
-//#line 394 "gramatica.y"
+//#line 446 "gramatica.y"
 {addErrorSintactico(String.format("Falta un DO en la sentencia while en linea %1$d",al.getLinea()));}
 break;
 case 87:
-//#line 398 "gramatica.y"
+//#line 450 "gramatica.y"
 {
                             TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
                             this.addTerceto(tercetoBF);
@@ -1456,30 +1511,33 @@ case 87:
                          }
 break;
 case 88:
-//#line 404 "gramatica.y"
+//#line 456 "gramatica.y"
 {addErrorSintactico(String.format("Falta la condicion en la sentencia while en linea %1$d",al.getLinea()));}
 break;
 case 89:
-//#line 406 "gramatica.y"
+//#line 458 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ')' en la sentencia while en linea %1$d",al.getLinea()));}
 break;
 case 90:
-//#line 408 "gramatica.y"
+//#line 460 "gramatica.y"
 {addErrorSintactico(String.format("Falta un '(' en la sentencia while en linea %1$d",al.getLinea()));}
 break;
 case 91:
-//#line 413 "gramatica.y"
+//#line 465 "gramatica.y"
 {
     					int incremento = 1;
     					if(!this.hashDeTercetos.containsKey(this.ambitoActual)){
     						incremento = 2;
     					} 
-                        TercetoPosicion posicion = new TercetoPosicion(this.numeroTercetos + incremento);
+    					int numeroDestino = this.numeroTercetos + incremento;
+						TercetoOperandos etiqueta = new TercetoOperandos("Label_" + numeroDestino);
+						this.addTerceto(etiqueta);
+                        TercetoPosicion posicion = new TercetoPosicion(numeroDestino);
                         this.pilaTercetos.push(posicion);
                     }
 break;
 case 92:
-//#line 423 "gramatica.y"
+//#line 478 "gramatica.y"
 {
 													        addReglaSintacticaReconocida(String.format("Sentencia print reconocida en linea %1$d",al.getLinea()));
 													        TercetoOperandos terPrint = new TercetoOperandos("print", new TercetoLexema(val_peek(2).sval));
@@ -1487,23 +1545,23 @@ case 92:
 													       }
 break;
 case 93:
-//#line 429 "gramatica.y"
+//#line 484 "gramatica.y"
 {addErrorSintactico(String.format("Falta un '(' en la sentencia print en linea %1$d",al.getLinea()));}
 break;
 case 94:
-//#line 431 "gramatica.y"
+//#line 486 "gramatica.y"
 {addErrorSintactico(String.format("Falta la cadena en la sentencia print en linea %1$d",al.getLinea()));}
 break;
 case 95:
-//#line 433 "gramatica.y"
+//#line 488 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ')' en la sentencia print en linea %1$d",al.getLinea()));}
 break;
 case 96:
-//#line 435 "gramatica.y"
+//#line 490 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ';' en la sentencia print en linea %1$d",al.getLinea()));}
 break;
 case 97:
-//#line 441 "gramatica.y"
+//#line 496 "gramatica.y"
 {
                                                     TercetoOperandos ter = new TercetoOperandos("||", this.TercetoCondicion, TercetoSubcondicion );
                                                     this.addTerceto(ter);
@@ -1512,13 +1570,13 @@ case 97:
                                                     }
 break;
 case 98:
-//#line 448 "gramatica.y"
+//#line 503 "gramatica.y"
 {this.TercetoCondicion = this.TercetoSubcondicion;
 
                                                     }
 break;
 case 99:
-//#line 455 "gramatica.y"
+//#line 510 "gramatica.y"
 {
                                                     TercetoOperandos ter = new TercetoOperandos("&&", TercetoSubcondicion, TercetoComparacion );
                                                     this.addTerceto(ter);
@@ -1526,11 +1584,11 @@ case 99:
                                                 }
 break;
 case 100:
-//#line 461 "gramatica.y"
+//#line 516 "gramatica.y"
 {this.TercetoSubcondicion = this.TercetoComparacion;  }
 break;
 case 101:
-//#line 466 "gramatica.y"
+//#line 521 "gramatica.y"
 {
                                                       TercetoOperandos ter = new TercetoOperandos(this.comparador, this.expresionPreComparador, this.expresion );
                                                             if(!this.tipoExpresionPreComparador.equals(this.tipoExpresion)){
@@ -1542,21 +1600,28 @@ case 101:
                                                             }
                                                             this.addTerceto(ter);
                                                             this.TercetoComparacion = ter;
+                                                             if(hayFunc){
+                                                                this.addErrorCodigoIntermedio("Se esta usando el identificador de una funcion en una expresion.");
+                                                                hayFunc = false;
+                                                             }
                                                          }
 break;
 case 102:
-//#line 483 "gramatica.y"
+//#line 542 "gramatica.y"
 {this.expresion = crearTercetoOperandos("+", tipoExpresion, this.tipoTermino, this.expresion, this.termino);
         										  if(this.listaExpresiones.size() > 0) {
 														this.listaExpresiones.remove(this.listaExpresiones.size() - 1);
 												  }
 												 
         										  this.listaExpresiones.add(this.expresion);
-        							
+                                                 if(hayFunc){
+                                                    this.addErrorCodigoIntermedio("Se esta usando el identificador de una funcion en una expresion.");
+                                                    hayFunc = false;
+                                                 }
         											}
 break;
 case 103:
-//#line 492 "gramatica.y"
+//#line 554 "gramatica.y"
 {this.expresion = crearTercetoOperandos("-", tipoExpresion, this.tipoTermino, this.expresion, this.termino);
                 								 if(this.listaExpresiones.size() > 0) {
 													 this.listaExpresiones.remove(this.listaExpresiones.size() - 1);
@@ -1564,11 +1629,14 @@ case 103:
 											  
                                                  this.listaExpresiones.add(this.expresion);
                                                  
-        
+                                                 if(hayFunc){
+                                                    this.addErrorCodigoIntermedio("Se esta usando el identificador de una funcion en una expresion.");
+                                                    hayFunc = false;
+                                                 }
         }
 break;
 case 104:
-//#line 502 "gramatica.y"
+//#line 567 "gramatica.y"
 {
                                     this.expresion = this.termino;
                                     this.tipoExpresion.setLength(0);
@@ -1581,28 +1649,39 @@ case 104:
                                    }
 break;
 case 105:
-//#line 519 "gramatica.y"
+//#line 584 "gramatica.y"
 {this.termino = crearTercetoOperandos("*", this.tipoTermino, this.tipoFactor, this.termino, this.factor);
                               		 if(this.listaTerminos.size() > 0) {
 										 this.listaTerminos.remove(this.listaTerminos.size() - 1);
 									  }
                                    	
-                                   	 this.listaTerminos.add(this.termino);	
+                                   	 this.listaTerminos.add(this.termino);
+
+                                   	 if(hayFunc){
+                                   	    this.addErrorCodigoIntermedio("Se esta usando el identificador de una funcion en una expresion.");
+                                   	    hayFunc = false;
+                                   	 }
                                    	
                                     }
 break;
 case 106:
-//#line 528 "gramatica.y"
+//#line 598 "gramatica.y"
 { this.termino = crearTercetoOperandos("/", this.tipoTermino, this.tipoFactor, this.termino, this.factor);
       								  if(this.listaTerminos.size() > 0) {
 										 this.listaTerminos.remove(this.listaTerminos.size() - 1);
 									  }
                                    	
-                                   	  this.listaTerminos.add(this.termino);	
+                                   	  this.listaTerminos.add(this.termino);
+
+                                     if(hayFunc){
+                                        this.addErrorCodigoIntermedio("Se esta usando el identificador de una funcion en una expresion.");
+                                        hayFunc = false;
+                                     }
+
                                     }
 break;
 case 107:
-//#line 536 "gramatica.y"
+//#line 612 "gramatica.y"
 {this.termino = this.factor;
                                      this.tipoTermino.setLength(0);
                                      this.tipoTermino.append(this.tipoFactor.toString());
@@ -1611,7 +1690,7 @@ case 107:
                                     }
 break;
 case 108:
-//#line 547 "gramatica.y"
+//#line 623 "gramatica.y"
 {
             EntradaTablaSimbolos entrada = al.estaEnTablaSimbolos(val_peek(0).sval + ambitoActual);
 			if(entrada != null)
@@ -1621,6 +1700,8 @@ case 108:
 				this.factor = new TercetoLexema(lexema);
 				this.tipoFactor.setLength(0);
 				this.tipoFactor.append(entrada.getTipo());
+
+				if(entrada.getUso().equals("funcion")) {hayFunc = true; lexemaVarFunc = lexema;}
 		    }
 			else
 			  {
@@ -1630,7 +1711,7 @@ case 108:
         }
 break;
 case 109:
-//#line 564 "gramatica.y"
+//#line 642 "gramatica.y"
 {
 		       			 this.factor = this.conversionExplicita(this.tipoExpresion, this.expresion);
 		        		 this.tipoFactor.setLength(0);
@@ -1653,11 +1734,11 @@ case 109:
 				}
 break;
 case 110:
-//#line 585 "gramatica.y"
+//#line 663 "gramatica.y"
 {}
 break;
 case 111:
-//#line 587 "gramatica.y"
+//#line 665 "gramatica.y"
 {
                                     this.factor =  new TercetoLexema(this.constante);
                                     this.tipoFactor.setLength(0);
@@ -1665,49 +1746,49 @@ case 111:
                                 }
 break;
 case 112:
-//#line 595 "gramatica.y"
+//#line 673 "gramatica.y"
 {
 					  this.accionSemanticaComparador();
 					  this.comparador = ">";
 				  }
 break;
 case 113:
-//#line 600 "gramatica.y"
+//#line 678 "gramatica.y"
 {
 					  this.accionSemanticaComparador();
 					  this.comparador = "<";
 				 }
 break;
 case 114:
-//#line 605 "gramatica.y"
+//#line 683 "gramatica.y"
 {
 							this.accionSemanticaComparador();
 							this.comparador = "==";
 						}
 break;
 case 115:
-//#line 610 "gramatica.y"
+//#line 688 "gramatica.y"
 {
 								this.accionSemanticaComparador();
 								this.comparador = ">=";
 							  }
 break;
 case 116:
-//#line 615 "gramatica.y"
+//#line 693 "gramatica.y"
 {
 								this.accionSemanticaComparador();
 								this.comparador = "<=";
 							  }
 break;
 case 117:
-//#line 620 "gramatica.y"
+//#line 698 "gramatica.y"
 {
 						this.accionSemanticaComparador();
 						this.comparador = "!=";
 					  }
 break;
 case 118:
-//#line 633 "gramatica.y"
+//#line 711 "gramatica.y"
 {
         								    addReglaSintacticaReconocida(String.format("Invocacion a funcion reconocida en linea %1$d",al.getLinea()));
                                             EntradaTablaSimbolos entradaFuncion = al.estaEnTablaSimbolos(val_peek(3).sval + this.ambitoActual);
@@ -1742,15 +1823,15 @@ case 118:
     									}
 break;
 case 119:
-//#line 666 "gramatica.y"
+//#line 744 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ID en la invocacion a funcion en linea %1$d",al.getLinea()));}
 break;
 case 120:
-//#line 668 "gramatica.y"
+//#line 746 "gramatica.y"
 {addErrorSintactico(String.format("Falta un ')' en la invocacion a funcion en linea %1$d",al.getLinea()));}
 break;
 case 121:
-//#line 673 "gramatica.y"
+//#line 751 "gramatica.y"
 {   EntradaTablaSimbolos entradaTablaSimbolos = al.getEntrada(val_peek(0).sval);
     														if (entradaTablaSimbolos.getTipo().equals(EntradaTablaSimbolos.INT)) {
     															   if ((Integer.parseInt(entradaTablaSimbolos.getLexema())) == AnalizadorLexico.MAX_INT_ABSOLUTO) {
@@ -1766,7 +1847,7 @@ case 121:
     													}
 break;
 case 122:
-//#line 687 "gramatica.y"
+//#line 765 "gramatica.y"
 {   EntradaTablaSimbolos entradaTablaSimbolos = al.getEntrada(val_peek(0).sval);
     															if (entradaTablaSimbolos.getTipo().equals(EntradaTablaSimbolos.INT)) {
 
@@ -1786,7 +1867,7 @@ case 122:
 
     														}
 break;
-//#line 1713 "Parser.java"
+//#line 1794 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
