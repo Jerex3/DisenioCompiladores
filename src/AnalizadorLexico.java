@@ -34,6 +34,7 @@ public class AnalizadorLexico {
     private String entrada;
     private ArrayList<String> listaPalabrasReservadas = new ArrayList<>();
     private ArrayList<String> listaDeErroresLexicos = new ArrayList<>();
+    private ArrayList<String> listaDeWarningsLexicos = new ArrayList<>();
     private ArrayList<String> listaDeTokens = new ArrayList<>();
 
     public AnalizadorLexico(Reader reader) {
@@ -60,6 +61,12 @@ public class AnalizadorLexico {
     public void addListaDeErroresLexicos(String error) {
         this.listaDeErroresLexicos.add(error);
     }
+
+    //agrega un warning lexico
+    public void addWarningLexico(String warning){this.listaDeWarningsLexicos.add(warning);}
+
+    //retorna la lista de warnings lexicos
+    public ArrayList<String> getListaDeWarningsLexicos(){return this.listaDeWarningsLexicos;}
 
     //agrega un token
     public void addListaDeTokens(String token) {

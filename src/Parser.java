@@ -581,6 +581,7 @@ final static String yyrule[] = {
     private ArrayList<String> listaDeReglas = new ArrayList<String>();
     private ArrayList<String> listaDeErroresSintacticos = new ArrayList<String>();
     private ArrayList<String> listaErroresCodigoIntermedio = new ArrayList<String>();
+    private ArrayList<String> listaDeWarningsSintacticos = new ArrayList<String>();
 	private ArrayList<Terceto> listaExpresiones = new ArrayList<Terceto>();
 	private ArrayList<Terceto> listaTerminos = new ArrayList<Terceto>();
 
@@ -688,6 +689,18 @@ final static String yyrule[] = {
 
     public ArrayList<String> getListaDeErroresSintacticos() {
         return listaDeErroresSintacticos;
+    }
+
+    public ArrayList<String> getListaDeWarningsLexicos() {
+        return al.getListaDeWarningsLexicos();
+    }
+
+    public ArrayList<String> getListaDeWarningsSintacticos() {
+        return listaDeWarningsSintacticos;
+    }
+
+    private void addWarningSintactico(String warning) {
+        listaDeWarningsSintacticos.add(warning);
     }
 
     private void addErrorSintactico(String error) {
@@ -883,7 +896,7 @@ final static String yyrule[] = {
 		this.tipoExpresionPreComparador.setLength(0);
 		this.tipoExpresionPreComparador.append(this.tipoExpresion.toString());
 	}
-//#line 815 "Parser.java"
+//#line 828 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -1835,7 +1848,7 @@ case 121:
 {   EntradaTablaSimbolos entradaTablaSimbolos = al.getEntrada(val_peek(0).sval);
     														if (entradaTablaSimbolos.getTipo().equals(EntradaTablaSimbolos.INT)) {
     															   if ((Integer.parseInt(entradaTablaSimbolos.getLexema())) == AnalizadorLexico.MAX_INT_ABSOLUTO) {
-    																			addErrorSintactico(String.format("Warning integer cte positiva mayor al maximo permitido en linea %1$d, se acota al maximo permitido", al.getLinea()));
+    																			addWarningSintactico(String.format("Warning integer cte positiva mayor al maximo permitido en linea %1$d, se acota al maximo permitido", al.getLinea()));
     																			Integer nuevoLexema = AnalizadorLexico.MAX_INT;
     																			al.getTablaDeSimbolos().remove(entradaTablaSimbolos.getLexema());
     																			entradaTablaSimbolos.setLexema(String.valueOf(nuevoLexema));
@@ -1867,7 +1880,7 @@ case 122:
 
     														}
 break;
-//#line 1794 "Parser.java"
+//#line 1807 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

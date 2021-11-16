@@ -26,10 +26,10 @@ public class AsFinSingle implements AccionSemantica {
 
         if(tempDouble != 0){
             if (tempDouble > AnalizadorLexico.MAX_SINGLE_POSITIVO) {
-                a.addListaDeErroresLexicos(String.format("Warning cte double fuera de rango, se acotara al limite permitido at linea: %1$d", a.getLinea()));
+                a.addWarningLexico(String.format("Warning cte double fuera de rango, se acotara al limite permitido at linea: %1$d", a.getLinea()));
                 tempDouble = AnalizadorLexico.MAX_SINGLE_POSITIVO;
             } else if (tempDouble < AnalizadorLexico.MIN_SINGLE_POSITIVO) {
-                a.addListaDeErroresLexicos(String.format("Warning cte double fuera de rango, se acotara al limite permitido at linea: %1$d", a.getLinea()));
+                a.addWarningLexico(String.format("Warning cte double fuera de rango, se acotara al limite permitido at linea: %1$d", a.getLinea()));
                 tempDouble = AnalizadorLexico.MIN_SINGLE_POSITIVO;
             }
         }

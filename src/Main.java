@@ -37,6 +37,17 @@ public class Main {
         else System.out.println("No se reconocieron errores sintacticos.");
         System.out.println();
 
+        //Warnings sintacticos
+        ArrayList<String> warningsSintacticos = parser.getListaDeWarningsSintacticos();
+        if(warningsSintacticos.size() > 0){
+            System.out.println("Los warnings sintactos reconocidos son los siguientes: ");
+            for (String war : warningsSintacticos){
+                System.out.println(war);
+            }
+        }
+        else System.out.println("No se reconocieron warnings sintacticos.");
+        System.out.println();
+
         //Errores codigo intermedio
         ArrayList<String> errCodInt = parser.getErroresCodInt();
         if(errCodInt.size() > 0){
@@ -68,6 +79,17 @@ public class Main {
             }
         }
         else System.out.println("No se reconocieron errores lexicos.");
+        System.out.println();
+
+        //Lista de warnings lexicos
+        ArrayList<String> warningLex = parser.getListaDeWarningsLexicos();
+        if(warningLex.size() > 0){
+            System.out.println("Los warnings lexicos son los siguientes: ");
+            for (String war : warningLex){
+                System.out.println(war);
+            }
+        }
+        else System.out.println("No se reconocieron warnings lexicos.");
         System.out.println();
 
         //Tabla de simbolos

@@ -751,7 +751,7 @@ comparador : '>'  {
             CTE											{   EntradaTablaSimbolos entradaTablaSimbolos = al.getEntrada($1.sval);
     														if (entradaTablaSimbolos.getTipo().equals(EntradaTablaSimbolos.INT)) {
     															   if ((Integer.parseInt(entradaTablaSimbolos.getLexema())) == AnalizadorLexico.MAX_INT_ABSOLUTO) {
-    																			addErrorSintactico(String.format("Warning integer cte positiva mayor al maximo permitido en linea %1$d, se acota al maximo permitido", al.getLinea()));
+    																			addWarningSintactico(String.format("Warning integer cte positiva mayor al maximo permitido en linea %1$d, se acota al maximo permitido", al.getLinea()));
     																			Integer nuevoLexema = AnalizadorLexico.MAX_INT;
     																			al.getTablaDeSimbolos().remove(entradaTablaSimbolos.getLexema());
     																			entradaTablaSimbolos.setLexema(String.valueOf(nuevoLexema));
@@ -788,6 +788,7 @@ comparador : '>'  {
     private ArrayList<String> listaDeReglas = new ArrayList<String>();
     private ArrayList<String> listaDeErroresSintacticos = new ArrayList<String>();
     private ArrayList<String> listaErroresCodigoIntermedio = new ArrayList<String>();
+    private ArrayList<String> listaDeWarningsSintacticos = new ArrayList<String>();
 	private ArrayList<Terceto> listaExpresiones = new ArrayList<Terceto>();
 	private ArrayList<Terceto> listaTerminos = new ArrayList<Terceto>();
 
@@ -895,6 +896,18 @@ comparador : '>'  {
 
     public ArrayList<String> getListaDeErroresSintacticos() {
         return listaDeErroresSintacticos;
+    }
+
+    public ArrayList<String> getListaDeWarningsLexicos() {
+        return al.getListaDeWarningsLexicos();
+    }
+
+    public ArrayList<String> getListaDeWarningsSintacticos() {
+        return listaDeWarningsSintacticos;
+    }
+
+    private void addWarningSintactico(String warning) {
+        listaDeWarningsSintacticos.add(warning);
     }
 
     private void addErrorSintactico(String error) {

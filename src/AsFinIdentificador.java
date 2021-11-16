@@ -8,7 +8,7 @@ public class AsFinIdentificador implements AccionSemantica {
             //evaluo si es mayor de lo permitido
             String lexema = a.getBuffer();
             if (lexema.length() > 22) {
-                a.addListaDeErroresLexicos(String.format("Warning ID demasiado largo en linea: %1$d, el ID queda de 25 caracteres", a.getLinea()));
+                a.addWarningLexico(String.format("Warning ID demasiado largo en linea: %1$d, el ID queda de 25 caracteres", a.getLinea()));
                 lexema = lexema.substring(0,21);
             }
             a.setTokenActual(a.getIDforPalabra("ID"));

@@ -7,7 +7,7 @@ public class AsFinEntero implements AccionSemantica {
 
         if(bufferInteger > AnalizadorLexico.MAX_INT_ABSOLUTO){
             
-            a.addListaDeErroresLexicos(String.format("Warning cte int fuera de rango, se acotara al limite permitido en linea: %1$d", a.getLinea()));
+            a.addWarningLexico(String.format("Warning cte int fuera de rango, se acotara al limite permitido en linea: %1$d", a.getLinea()));
             bufferInteger = AnalizadorLexico.MAX_INT_ABSOLUTO;
 
         }
