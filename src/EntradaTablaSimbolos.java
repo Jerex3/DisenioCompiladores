@@ -15,7 +15,7 @@ public class EntradaTablaSimbolos {
     private Integer naContenidos;
     private int lineaDeclaracion;
     private ArrayList<Integer> listaReferencias;
-
+    private String llamadoLexema;
 
     public EntradaTablaSimbolos(String tipo, int lineaDeclaracion)
     {
@@ -126,6 +126,14 @@ public class EntradaTablaSimbolos {
 
 	public void setTipoParametro(String tipoParametro) {
 		this.tipoParametro = tipoParametro;
+	}
+
+	public String getLlamadoLexema() {
+		return llamadoLexema;
+	}
+
+	public void setLlamadoLexema(String llamadoLexema) {
+		this.llamadoLexema = llamadoLexema;
 	}
 
 }

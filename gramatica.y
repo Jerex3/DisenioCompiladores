@@ -176,6 +176,7 @@ import java.util.*;
                atributos.setUso("funcion");
                atributos.setTipo(this.ultimoTipoFuncion);
                atributos.setTipoParametro(this.tipoParametro);
+               atributos.setLlamadoLexema(atributos.getLexema());
            }
            this.ambitoActual = this.ambitoActual + this.ultimoAmbito;
            EntradaTablaSimbolos param = al.getEntrada(this.lexemaParametro);
@@ -292,7 +293,7 @@ import java.util.*;
 
                                          if(entFun.getUso().equals(estaEnTablaSimbolos.getUso()) && entFun.getTipoParametro().equals(estaEnTablaSimbolos.getTipoParametro()) && entFun.getTipo().equals(estaEnTablaSimbolos.getTipo())) {
                                             this.asignacion.setTipo(estaEnTablaSimbolos.getTipo());
-                                            estaEnTablaSimbolos.setLexema(entFun.getLexema());
+                                            estaEnTablaSimbolos.setLlamadoLexema(entFun.getLexema());
                                             estaEnTablaSimbolos.setParametro(entFun.getParametro());
                                          } else {
 
@@ -717,7 +718,7 @@ comparador : '>'  {
 											EntradaTablaSimbolos entradaParametroFormal = al.getEntrada(entradaFuncion.getParametro());
 											String lexemaFuncion;
                                             if(entradaFuncion != null){
-                                            	lexemaFuncion = entradaFuncion.getLexema();
+                                            	lexemaFuncion = entradaFuncion.getLlamadoLexema();
                                                 if(entradaParametro != null){
                                                     if(!entradaParametro.getTipo().equals(entradaParametroFormal.getTipo())){
                                                     	this.addErrorCodigoIntermedio("Se intenta llamar a la funcion " + $1.sval + " Con el tipo " + entradaParametro.getTipo() + " Pero usa " + entradaParametroFormal.getTipo());
