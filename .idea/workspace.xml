@@ -7,17 +7,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f9b0a41-55bf-4370-9204-ce23159e6eae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/GeneracionAssembler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Registro.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fuente.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Fuente.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gramatica.y" beforeDir="false" afterPath="$PROJECT_DIR$/gramatica.y" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AnalizadorLexico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AnalizadorLexico.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AccionSemantica.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AccionSemantica.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AnalizadorLexico.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AnalizadorLexico.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsErrorLexico.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsErrorLexico.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinCadena.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinCadena.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinComentario.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinComentario.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinEntero.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinEntero.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinIdentificador.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinIdentificador.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinSimbolo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinSimbolo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinSingle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsFinSingle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsIncremento.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsIncremento.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsOmitir.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsOmitir.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsWarningSalto.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/AsWarningSalto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/CambioEstado.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/CambioEstado.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/EntradaTablaSimbolos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/EntradaTablaSimbolos.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/LectorMatrizAS.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/LectorMatrizAS.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/LectorMatrizTE.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/LectorMatrizTE.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Parser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Parser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/ParserVal.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/ParserVal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Reader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Reader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Terceto.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Terceto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/TercetoLexema.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/TercetoLexema.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/TercetoOperandos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/TercetoOperandos.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/TercetoPosicion.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/TercetoPosicion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Tripla.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TrabajoDiseñoCompiladores/Tripla.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AsErrorLexico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AsErrorLexico.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AsFinEntero.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AsFinEntero.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AsFinIdentificador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AsFinIdentificador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AsFinSingle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AsFinSingle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AsWarningSalto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AsWarningSalto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -33,13 +51,46 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="DisenioCompiladores" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/AsErrorLexico.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gramatica.y">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
+            <state relative-caret-position="335">
+              <caret line="169" selection-start-line="169" selection-end-line="170" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Fuente.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Parser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="164">
+              <caret line="1346" selection-start-line="1346" selection-end-line="1346" />
             </state>
           </provider>
         </entry>
@@ -55,12 +106,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>terceto</find>
-      <find>getTer</find>
-      <find>ini</find>
-      <find>baja</find>
-      <find>renombrar</find>
-      <find>tabladecon</find>
       <find>crear</find>
       <find>inici</find>
       <find>getEntr</find>
@@ -68,9 +113,6 @@
       <find>invocacionFuncion</find>
       <find>asignaci</find>
       <find>setUso</find>
-      <find>asignacion</find>
-      <find>FUNC</find>
-      <find>hayFunc</find>
       <find>factor</find>
       <find>ASIGNACION</find>
       <find>getTipo</find>
@@ -82,9 +124,17 @@
       <find>lexicos</find>
       <find>warning</find>
       <find>cte</find>
-      <find>cte</find>
       <find>listaDeWarning</find>
       <find>addListaDeErroresLexicos</find>
+      <find>ASIGNACI</find>
+      <find>invocaci</find>
+      <find>asignac</find>
+      <find>expresion</find>
+      <find>renombrarLexemaParametro</find>
+      <find>asignacion</find>
+      <find>setUso(</find>
+      <find>FUNC</find>
+      <find>hayFunc</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -103,18 +153,18 @@
         <option value="$PROJECT_DIR$/src/AsFinCadena.java" />
         <option value="$PROJECT_DIR$/src/EntradaTablaSimbolos.java" />
         <option value="$PROJECT_DIR$/src/TercetoOperandos.java" />
-        <option value="$PROJECT_DIR$/src/Parser.java" />
-        <option value="$PROJECT_DIR$/Fuente.txt" />
         <option value="$PROJECT_DIR$/src/Registro.java" />
         <option value="$PROJECT_DIR$/src/GeneracionAssembler.java" />
         <option value="$PROJECT_DIR$/src/AnalizadorLexico.java" />
-        <option value="$PROJECT_DIR$/src/Main.java" />
-        <option value="$PROJECT_DIR$/gramatica.y" />
-        <option value="$PROJECT_DIR$/src/AsErrorLexico.java" />
         <option value="$PROJECT_DIR$/src/AsFinEntero.java" />
         <option value="$PROJECT_DIR$/src/AsFinIdentificador.java" />
         <option value="$PROJECT_DIR$/src/AsFinSingle.java" />
         <option value="$PROJECT_DIR$/src/AsWarningSalto.java" />
+        <option value="$PROJECT_DIR$/src/AsErrorLexico.java" />
+        <option value="$PROJECT_DIR$/src/Main.java" />
+        <option value="$PROJECT_DIR$/Fuente.txt" />
+        <option value="$PROJECT_DIR$/gramatica.y" />
+        <option value="$PROJECT_DIR$/src/Parser.java" />
       </list>
     </option>
   </component>
@@ -131,7 +181,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -149,6 +198,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -227,11 +277,14 @@
       <workItem from="1636900977297" duration="2506000" />
       <workItem from="1636927780010" duration="5343000" />
       <workItem from="1637096450479" duration="2477000" />
+      <workItem from="1637102711938" duration="2711000" />
+      <workItem from="1637106328834" duration="840000" />
+      <workItem from="1637107292027" duration="212000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79586000" />
+    <option name="totallyTimeSpent" value="83349000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -244,28 +297,27 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1621984" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4987775" visible="true" weight="0.16823056" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Favorites" order="6" sideWeight="0.5012225" side_tool="true" weight="0.16621985" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32892805" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.6431718" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.06754772" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39941263" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32892805" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32892805" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.32892805" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.04405286" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.26284876" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -316,6 +368,7 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.y" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/DisenioCompiladores$Main.ic" NAME="Main Coverage Results" MODIFIED="1637107045022" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/TrabajoDiseñoCompiladores$Main.ic" NAME="Main Coverage Results" MODIFIED="1636672261459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="editorHistoryManager">
@@ -337,13 +390,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AccionSemantica.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="17" selection-start-column="17" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -401,24 +447,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Fuente.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/EntradaTablaSimbolos.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1224">
-          <caret line="111" column="26" selection-start-line="111" selection-start-column="26" selection-end-line="111" selection-end-column="26" />
-          <folding>
-            <element signature="e#1780#1781#0" expanded="true" />
-            <element signature="e#1810#1811#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GeneracionAssembler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="586">
@@ -426,68 +454,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="598" column="103" lean-forward="true" selection-start-line="598" selection-start-column="103" selection-end-line="598" selection-end-column="103" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AnalizadorLexico.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gramatica.y">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="790" column="68" selection-start-line="790" selection-start-column="68" selection-end-line="790" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AsFinCadena.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="24" lean-forward="true" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AsFinComentario.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="13" selection-start-column="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AsFinEntero.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="53" lean-forward="true" selection-start-line="5" selection-start-column="53" selection-end-line="5" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AsFinIdentificador.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="9" column="39" lean-forward="true" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -519,24 +485,111 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AsWarningSalto.java">
+    <entry file="file://$PROJECT_DIR$/src/AsFinIdentificador.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        <state relative-caret-position="153">
+          <caret line="9" column="39" lean-forward="true" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CambioEstado.java">
+    <entry file="file://$PROJECT_DIR$/src/AsFinEntero.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="64" column="18" selection-start-line="64" selection-start-column="18" selection-end-line="64" selection-end-column="19" />
+        <state relative-caret-position="85">
+          <caret line="5" column="53" lean-forward="true" selection-start-line="5" selection-start-column="53" selection-end-line="5" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AsFinComentario.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AsErrorLexico.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
+        <state relative-caret-position="105">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CambioEstado.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="91" column="28" lean-forward="true" selection-start-line="91" selection-start-column="28" selection-end-line="91" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AccionSemantica.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AsFinCadena.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="36" selection-start-column="36" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AsWarningSalto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EntradaTablaSimbolos.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+          <folding>
+            <element signature="e#1780#1781#0" expanded="true" />
+            <element signature="e#1810#1811#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AnalizadorLexico.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="29" column="26" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fuente.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gramatica.y">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="169" selection-start-line="169" selection-end-line="170" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="1346" selection-start-line="1346" selection-end-line="1346" />
         </state>
       </provider>
     </entry>

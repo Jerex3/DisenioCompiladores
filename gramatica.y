@@ -173,8 +173,9 @@ import java.util.*;
            if(this.al.estaEnTabla(lexema))
            {
                EntradaTablaSimbolos atributos = this.al.getEntrada(lexema);
-               atributos.setUso("nombre de procedimiento");
+               atributos.setUso("funcion");
                atributos.setTipo(this.ultimoTipoFuncion);
+               atributos.setTipoParametro(this.tipoParametro);
            }
            this.ambitoActual = this.ambitoActual + this.ultimoAmbito;
            EntradaTablaSimbolos param = al.getEntrada(this.lexemaParametro);
@@ -289,9 +290,10 @@ import java.util.*;
 
                                          this.asignacion = new TercetoOperandos(":=",new TercetoLexema(estaEnTablaSimbolos.getLexema()), this.expresion);
 
-                                         if(entFun.getUso().equals(estaEnTablaSimbolos.getUso()) && entFun.getTipoParametro().equals(estaEnTablaSimbolos.getTipoParametro())) {
-                                            //this.asignacion.setTipo(estaEnTablaSimbolos.getTipo());
-                                            //ACA
+                                         if(entFun.getUso().equals(estaEnTablaSimbolos.getUso()) && entFun.getTipoParametro().equals(estaEnTablaSimbolos.getTipoParametro()) && entFun.getTipo().equals(estaEnTablaSimbolos.getTipo())) {
+                                            this.asignacion.setTipo(estaEnTablaSimbolos.getTipo());
+                                            estaEnTablaSimbolos.setLexema(entFun.getLexema());
+                                            estaEnTablaSimbolos.setParametro(entFun.getParametro());
                                          } else {
 
                                             this.addErrorCodigoIntermedio("No es posible realizar la asignacion por incompatibilidad de tipos");
@@ -965,7 +967,7 @@ comparador : '>'  {
 	    this.al.cambiarClave(lex, lexema);
 	    if(al.estaEnTabla(lexema))
 	    {
-		    this.al.getEntrada(lexema).setUso("variable encabezado funcion");
+		    this.al.getEntrada(lexema).setUso("funcion");
 	    }
 	    return lexema;
     }
