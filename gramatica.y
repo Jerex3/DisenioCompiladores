@@ -210,7 +210,7 @@ import java.util.*;
 									        	String lexemaFuncionActual = this.ambitoActual.substring(this.ambitoActual.lastIndexOf(".") + 1, this.ambitoActual.length()) +  this.ambitoActual.substring(0, this.ambitoActual.lastIndexOf("."));
 									        	String tipoFuncionActual = al.getEntrada(lexemaFuncionActual).getTipo();
 									        	if(!tipoFuncionActual.equals(this.tipoExpresion)){
-									        		this.addErrorSintactico("El tipo de la funcion" + lexemaFuncionActual + " es " + tipoFuncionActual + " y se intenta retornar " + this.tipoExpresion);
+									        		this.addErrorCodigoIntermedio("El tipo de la funcion" + lexemaFuncionActual + " es " + tipoFuncionActual + " y se intenta retornar " + this.tipoExpresion);
 									        	}
 									        	TercetoOperandos tercetoRetorno = new TercetoOperandos("retorno", this.expresion);
 									        	this.addTerceto(tercetoRetorno);
@@ -642,7 +642,9 @@ import java.util.*;
 			  this.al.bajaTablaDeSimbolos($1.sval);
         }
         |
-        SINGLE '(' expresionSimple ')' {
+        inicioCasteo expresionSimple ')' {
+        				
+        				 this.creandoCasteo = false;
 		       			 this.factor = this.conversionExplicita(this.tipoExpresion, this.expresion);
 		        		 this.tipoFactor.setLength(0);
 						 this.tipoFactor.append(EntradaTablaSimbolos.SINGLE); 
@@ -672,6 +674,18 @@ import java.util.*;
                                 }
 
     ;
+    
+    inicioCasteo: SINGLE '('  			{
+    										if(creandoCasteo){
+    											addErrorCodigoIntermedio("No es posible realizar una anidacion de casteos");
+    										} else {
+    										  creandoCasteo = true;
+    										
+    										}	
+    										
+    							
+    									}
+    							
 
 comparador : '>'  {
 					  this.accionSemanticaComparador();
@@ -819,7 +833,8 @@ comparador : '>'  {
 	
 	private String tipoParametro;
 	private String lexemaParametro;
-
+	
+	private boolean creandoCasteo = false;
 	private boolean hayFunc = false;
 	private String lexemaVarFunc ="";
 		

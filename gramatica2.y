@@ -73,17 +73,10 @@ import java.util.*;
         tipo error ';'
                 {addErrorSintactico(String.format("Faltan las variables en linea %1$d",al.getLinea()));}
         |
-        listaVariables ';'
-                {addErrorSintactico(String.format("Falta el tipo en la declaracion de variables en linea %1$d",al.getLinea()));}
-        |
-        listaVariables
-                {addErrorSintactico(String.format("Falta el tipo en la declaracion de variables en linea %1$d",al.getLinea()));}
-        |
+     
         error listaVariables ';'
                 {addErrorSintactico(String.format("Falta el tipo en la declaracion de variables en linea %1$d",al.getLinea()));}
-        |
-        error listaVariables
-                {addErrorSintactico(String.format("Falta el tipo en la declaracion de variables en linea %1$d",al.getLinea()));}
+
 
     ;
 
@@ -98,13 +91,15 @@ import java.util.*;
     listaVariables :
         identificador                             { String lex = renombrarLexema();
                                                     EntradaTablaSimbolos en = al.getEntrada(lex);
-                                                    en.setTipo(this.ultimoTipo);
+                                                    if(en != null) en.setTipo(this.ultimoTipo);
+                                                    
                                                     }
         |
         listaVariables ',' identificador          {String lex = renombrarLexema();
                                                     EntradaTablaSimbolos en = al.getEntrada(lex);
                                                     en.setTipo(this.ultimoTipo);
                                                     }
+        
     ;
 
 	    listaVariablesFuncion :
@@ -117,6 +112,9 @@ import java.util.*;
         													this.listaVariablesFuncion.add($3.sval);
                                                     		
                                                     	 }
+ 		|
+ 		listaVariablesFuncion error identificador      {addErrorSintactico(String.format("Falta , entre identificadores en linea %1$d",al.getLinea()));}
+ 			 	
 
     ;
 	
@@ -137,14 +135,22 @@ import java.util.*;
         																		ent.setUso("funcion");
         																	}
         															  }
-
+	|
+	tipoFuncion FUNC '(' tipo error listaVariablesFuncion ';' {addErrorSintactico("falta un )" + " en la declaracion de encabezado de funcion en linea " + al.getLinea());}
+	|
+	tipoFuncion FUNC error tipo ')' listaVariablesFuncion ';' {addErrorSintactico("falta un (" + " en la declaracion de encabezado de funcion en linea " + al.getLinea());}
+    |
+    tipoFuncion FUNC '(' error ')' listaVariablesFuncion ';'  {addErrorSintactico("Falta tipo o es incorrecto el tipo " + " en la declaracion de encabezado de funcion en linea " + al.getLinea());}
     ;
 
 
     declaracionFuncion :
         encabezadoFuncion sentenciaDeclarativa BEGIN conjuntoSentenciasEjecutables finFuncion END ';'          {addReglaSintacticaReconocida(String.format("Declaracion de funcion reconocida en linea %1$d",al.getLinea()));
                                                                                                                 finDeFuncion();}
-
+		|
+		encabezadoFuncion sentenciaDeclarativa error conjuntoSentenciasEjecutables finFuncion END ';' {addErrorSintactico("Falta BEGIN o esta mal escrito, en declaracion de funcion " + this.ambitoActual + " en linea " + al.getLinea() );}
+		|
+		encabezadoFuncion sentenciaDeclarativa BEGIN conjuntoSentenciasEjecutables finFuncion error ';' {addErrorSintactico("Falta END o esta mal escrito, en declaracion de funcion " + this.ambitoActual + " en linea " + al.getLinea() );}
     ;
 
 
@@ -219,8 +225,8 @@ import java.util.*;
 									        	addReglaSintacticaReconocida(String.format("Retorno reconocido en linea %1$d",al.getLinea()));
 									        	String lexemaFuncionActual = this.ambitoActual.substring(this.ambitoActual.lastIndexOf(".") + 1, this.ambitoActual.length()) +  this.ambitoActual.substring(0, this.ambitoActual.lastIndexOf("."));
 									        	String tipoFuncionActual = al.getEntrada(lexemaFuncionActual).getTipo();
-									        	if(!tipoFuncionActual.equals(this.tipoExpresion)){
-									        		this.addErrorSintactico("El tipo de la funcion" + lexemaFuncionActual + " es " + tipoFuncionActual + " y se intenta retornar " + this.tipoExpresion);
+									        	if(!tipoFuncionActual.equals(this.tipoExpresion.toString())){
+									        		this.addErrorCodigoIntermedio("El tipo de la funcion" + lexemaFuncionActual + " es " + tipoFuncionActual + " y se intenta retornar " + this.tipoExpresion);
 									        	}
 									        	TercetoOperandos tercetoRetorno = new TercetoOperandos("retorno", this.expresion);
 									        	this.addTerceto(tercetoRetorno);
@@ -312,9 +318,10 @@ import java.util.*;
                                      if(estaEnTablaSimbolos != null) {
 
                                          this.asignacion = new TercetoOperandos(":=",new TercetoLexema(estaEnTablaSimbolos.getLexema()), this.expresion);
-
-                                         if(!this.tipoExpresion.equals(estaEnTablaSimbolos.getTipo())) {
-                                            this.addErrorCodigoIntermedio("No es posible realizar la asignacion por incompatibilidad de tipos");
+										 System.out.println(estaEnTablaSimbolos.getTipo());
+										 System.out.println(this.tipoExpresion);
+                                         if(!this.tipoExpresion.toString().equals(estaEnTablaSimbolos.getTipo())) {
+                                            this.addErrorCodigoIntermedio("No es posible realizar la asignacion por incompatibilidad de tipos entre " + estaEnTablaSimbolos.getLexema() + " y " + this.expresion.toString());
                                             this.asignacion.setTipo(EntradaTablaSimbolos.SINGLE);
                                          } else {
                                             this.asignacion.setTipo(estaEnTablaSimbolos.getTipo());
