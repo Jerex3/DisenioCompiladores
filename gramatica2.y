@@ -141,6 +141,7 @@ import java.util.*;
 	tipoFuncion FUNC error tipo ')' listaVariablesFuncion ';' {addErrorSintactico("falta un (" + " en la declaracion de encabezado de funcion en linea " + al.getLinea());}
     |
     tipoFuncion FUNC '(' error ')' listaVariablesFuncion ';'  {addErrorSintactico("Falta tipo o es incorrecto el tipo " + " en la declaracion de encabezado de funcion en linea " + al.getLinea());}
+    
     ;
 
 
@@ -151,6 +152,8 @@ import java.util.*;
 		encabezadoFuncion sentenciaDeclarativa error conjuntoSentenciasEjecutables finFuncion END ';' {addErrorSintactico("Falta BEGIN o esta mal escrito, en declaracion de funcion " + this.ambitoActual + " en linea " + al.getLinea() );}
 		|
 		encabezadoFuncion sentenciaDeclarativa BEGIN conjuntoSentenciasEjecutables finFuncion error ';' {addErrorSintactico("Falta END o esta mal escrito, en declaracion de funcion " + this.ambitoActual + " en linea " + al.getLinea() );}
+   		|
+   		 error sentenciaDeclarativa BEGIN conjuntoSentenciasEjecutables finFuncion END ';'   {addErrorSintactico("WTFSXD");}
     ;
 
 
@@ -168,7 +171,13 @@ import java.util.*;
        												TercetoOperandos finFuncion = new TercetoOperandos("finfuncion");
         											this.addTerceto(finFuncion);
         										}
-
+		|	
+		retorno ';' postcondicion error {addErrorSintactico("Falta ; en linea " + al.getLinea());}
+		|
+		retorno error postcondicion ';' {addErrorSintactico("Falta ; en linea " + al.getLinea());}
+		|
+	    retorno error  {addErrorSintactico("Falta ; en linea " + al.getLinea());}
+	
     ;
 
 
@@ -207,7 +216,118 @@ import java.util.*;
            this.al.getEntrada(lexema).setParametro(param.getLexema());
            
         }
-
+        |
+         error FUNC ID '(' parametro ')'
+        {
+           addErrorSintactico("Falta tipo en declaracion de funcion " + $3.sval);
+           addWarningSintactico("El tipo de la funcion " + $3.sval + " no fue correctamente declarado, asi que se usara SINGLE, pero no sera posible generar codigo ya que esto es un error.");
+           String lexema;
+           EntradaTablaSimbolos esRedeclarada = this.al.esRedeclarada($3.sval + this.ambitoActual);
+           if(esRedeclarada != null)
+           {
+               this.addErrorCodigoIntermedio("Funcion " + $3.sval + " redeclarada. La funcion ya fue declarada en la linea: " + esRedeclarada.getLineaDeclaracion() + ".");
+               lexema = "#REDECLARADO" + $3.sval + this.ambitoActual;
+               this.ultimoAmbito = "." + "#REDECLARADO" + $3.sval;
+               this.ultimaFuncion = lexema;
+           }
+           else
+           {
+               lexema = $3.sval + this.ambitoActual;
+               this.ultimoAmbito = "." + $3.sval;
+               this.ultimaFuncion = $3.sval + this.ambitoActual;
+           }
+           this.al.cambiarClave($3.sval, lexema);
+           if(this.al.estaEnTabla(lexema))
+           {
+               EntradaTablaSimbolos atributos = this.al.getEntrada(lexema);
+               atributos.setUso("funcion");
+               atributos.setTipo(EntradaTablaSimbolos.SINGLE);
+               atributos.setTipoParametro(this.tipoParametro);
+               atributos.setLlamadoLexema(atributos.getLexema());
+           }
+           this.ambitoActual = this.ambitoActual + this.ultimoAmbito;
+           EntradaTablaSimbolos param = al.getEntrada(this.lexemaParametro);
+           param.setLexema(this.lexemaParametro + this.ambitoActual);
+           param.setTipo(this.tipoParametro);
+           al.cambiarClave(this.lexemaParametro, this.lexemaParametro + this.ambitoActual);
+           this.al.getEntrada(lexema).setParametro(param.getLexema());
+           
+        }
+        |
+       tipoFuncion FUNC ID  parametro ')'
+        {
+           addErrorSintactico("Falta ( en declaracion de funcion ");
+           String lexema;
+           EntradaTablaSimbolos esRedeclarada = this.al.esRedeclarada($3.sval + this.ambitoActual);
+           if(esRedeclarada != null)
+           {
+               this.addErrorCodigoIntermedio("Funcion " + $3.sval + " redeclarada. La funcion ya fue declarada en la linea: " + esRedeclarada.getLineaDeclaracion() + ".");
+               lexema = "#REDECLARADO" + $3.sval + this.ambitoActual;
+               this.ultimoAmbito = "." + "#REDECLARADO" + $3.sval;
+               this.ultimaFuncion = lexema;
+           }
+           else
+           {
+               lexema = $3.sval + this.ambitoActual;
+               this.ultimoAmbito = "." + $3.sval;
+               this.ultimaFuncion = $3.sval + this.ambitoActual;
+           }
+           this.al.cambiarClave($3.sval, lexema);
+           if(this.al.estaEnTabla(lexema))
+           {
+               EntradaTablaSimbolos atributos = this.al.getEntrada(lexema);
+               atributos.setUso("funcion");
+               atributos.setTipo(EntradaTablaSimbolos.SINGLE);
+               atributos.setTipoParametro(this.tipoParametro);
+               atributos.setLlamadoLexema(atributos.getLexema());
+           }
+           this.ambitoActual = this.ambitoActual + this.ultimoAmbito;
+           EntradaTablaSimbolos param = al.getEntrada(this.lexemaParametro);
+           param.setLexema(this.lexemaParametro + this.ambitoActual);
+           param.setTipo(this.tipoParametro);
+           al.cambiarClave(this.lexemaParametro, this.lexemaParametro + this.ambitoActual);
+           this.al.getEntrada(lexema).setParametro(param.getLexema());
+           
+        }
+        |
+         tipoFuncion FUNC ID '(' parametro 
+        {
+           addErrorSintactico("Falta ) en declaracion de funcion ");
+           String lexema;
+           EntradaTablaSimbolos esRedeclarada = this.al.esRedeclarada($3.sval + this.ambitoActual);
+           if(esRedeclarada != null)
+           {
+               this.addErrorCodigoIntermedio("Funcion " + $3.sval + " redeclarada. La funcion ya fue declarada en la linea: " + esRedeclarada.getLineaDeclaracion() + ".");
+               lexema = "#REDECLARADO" + $3.sval + this.ambitoActual;
+               this.ultimoAmbito = "." + "#REDECLARADO" + $3.sval;
+               this.ultimaFuncion = lexema;
+           }
+           else
+           {
+               lexema = $3.sval + this.ambitoActual;
+               this.ultimoAmbito = "." + $3.sval;
+               this.ultimaFuncion = $3.sval + this.ambitoActual;
+           }
+           this.al.cambiarClave($3.sval, lexema);
+           if(this.al.estaEnTabla(lexema))
+           {
+               EntradaTablaSimbolos atributos = this.al.getEntrada(lexema);
+               atributos.setUso("funcion");
+               atributos.setTipo(EntradaTablaSimbolos.SINGLE);
+               atributos.setTipoParametro(this.tipoParametro);
+               atributos.setLlamadoLexema(atributos.getLexema());
+           }
+           this.ambitoActual = this.ambitoActual + this.ultimoAmbito;
+           EntradaTablaSimbolos param = al.getEntrada(this.lexemaParametro);
+           param.setLexema(this.lexemaParametro + this.ambitoActual);
+           param.setTipo(this.tipoParametro);
+           al.cambiarClave(this.lexemaParametro, this.lexemaParametro + this.ambitoActual);
+           this.al.getEntrada(lexema).setParametro(param.getLexema());
+           
+        }
+      	
+      	
+        
 
     ;
 
@@ -231,6 +351,12 @@ import java.util.*;
 									        	TercetoOperandos tercetoRetorno = new TercetoOperandos("retorno", this.expresion);
 									        	this.addTerceto(tercetoRetorno);
 									        }
+    	|
+    	error '(' expresionSimple ')' {addErrorSintactico("Falta o esta mal escrita palabra reservada RETURN en linea " + al.getLinea());} 
+    	|
+    	RETURN error expresionSimple ')' {addErrorSintactico("Falta ( en linea " + al.getLinea());} 
+    	|
+    	RETURN '(' expresionSimple error {addErrorSintactico("Falta ) en linea " + al.getLinea());} 
 
     ;
 
@@ -238,25 +364,26 @@ import java.util.*;
     postcondicion :
         POST ':' '(' condicion ')' ',' CADENA           {
     														addReglaSintacticaReconocida(String.format("Postcondicion reconocida en linea %1$d",al.getLinea()));
-    														TercetoOperandos print = new TercetoOperandos("print", new TercetoLexema($7.sval));
-    														TercetoOperandos fin = new TercetoOperandos("fin");
+    														postCondicion($7.sval);
     														
-    														TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
-    													    this.addTerceto(tercetoBF);
-    													    
-    													    TercetoOperandos tercetoBI = new TercetoOperandos("BI");
-    													   	this.pilaTercetoFinFuncion.push(tercetoBI);
-    													   	
-    														this.addTerceto(tercetoBI);
-    													
-     														TercetoOperandos etiqueta = new TercetoOperandos("Label_" + ( this.numeroTercetos + 1));
-                                                            this.addTerceto(etiqueta);		
-                                                            
-                                                            tercetoBF.setOperador2(etiqueta);		
-                                                            							
-    														this.addTerceto(print);
-    														this.addTerceto(fin);
     													}
+		|
+		POST error '(' condicion ')' ',' CADENA {addErrorSintactico("Falta : en linea " + al.getLinea());
+												postCondicion($7.sval);	
+												}
+		|
+		POST ':' error condicion ')' ',' CADENA {addErrorSintactico("Falta : en linea " + al.getLinea());
+												postCondicion($7.sval);	
+												}
+		|
+		POST ':' '(' condicion error ',' CADENA {addErrorSintactico("Falta : en linea " + al.getLinea());
+												postCondicion($7.sval);	
+												}
+		|
+		POST ':' '(' condicion ')' error CADENA {addErrorSintactico("Falta : en linea " + al.getLinea());
+												postCondicion($7.sval);	
+												}
+		
     ;
 
 
@@ -340,6 +467,64 @@ import java.util.*;
                                  }
 
                                   }
+          |
+          identificador ASIGNACION expresionSimple  {addErrorSintactico("Falta ; en la asignacion en linea " + (al.getLinea() - 1)); if(hayFunc){
+                                    hayFunc = false;
+                                    EntradaTablaSimbolos entFun = al.getEntrada(lexemaVarFunc);
+
+                                     EntradaTablaSimbolos estaEnTablaSimbolos = this.al.estaEnTablaSimbolos($1.sval + this.ambitoActual);
+                                     if(estaEnTablaSimbolos != null) {
+
+                                         this.asignacion = new TercetoOperandos(":=",new TercetoLexema(estaEnTablaSimbolos.getLexema()), this.expresion);
+
+                                         if(entFun.getUso().equals(estaEnTablaSimbolos.getUso()) && entFun.getTipoParametro().equals(estaEnTablaSimbolos.getTipoParametro()) && entFun.getTipo().equals(estaEnTablaSimbolos.getTipo())) {
+                                            this.asignacion.setTipo(estaEnTablaSimbolos.getTipo());
+                                            estaEnTablaSimbolos.setLlamadoLexema(entFun.getLexema());
+                                            estaEnTablaSimbolos.setParametro(entFun.getParametro());
+                                         } else {
+
+                                            this.addErrorCodigoIntermedio("No es posible realizar la asignacion por incompatibilidad de tipos");
+                                            this.asignacion.setTipo(EntradaTablaSimbolos.SINGLE);
+                                         }
+
+
+                                     } else {
+                                        this.addErrorCodigoIntermedio(": La variable '" + $1.sval + "' en el ámbito actual no fue declarada.'");
+                                         this.asignacion = new TercetoOperandos(":=",new TercetoLexema("VariableNoEncontrada"), this.expresion);
+
+                                     }
+
+                                     this.addTerceto(asignacion);
+                                     this.tipoAsignacion = asignacion.getTipo();
+                                     this.al.bajaTablaDeSimbolos($1.sval);
+
+                                }
+
+                                else{
+                                     EntradaTablaSimbolos estaEnTablaSimbolos = this.al.estaEnTablaSimbolos($1.sval + this.ambitoActual);
+                                     if(estaEnTablaSimbolos != null) {
+
+                                         this.asignacion = new TercetoOperandos(":=",new TercetoLexema(estaEnTablaSimbolos.getLexema()), this.expresion);
+										 System.out.println(estaEnTablaSimbolos.getTipo());
+										 System.out.println(this.tipoExpresion);
+                                         if(!this.tipoExpresion.toString().equals(estaEnTablaSimbolos.getTipo())) {
+                                            this.addErrorCodigoIntermedio("No es posible realizar la asignacion por incompatibilidad de tipos entre " + estaEnTablaSimbolos.getLexema() + " y " + this.expresion.toString());
+                                            this.asignacion.setTipo(EntradaTablaSimbolos.SINGLE);
+                                         } else {
+                                            this.asignacion.setTipo(estaEnTablaSimbolos.getTipo());
+                                         }
+
+
+                                     } else {
+                                        this.addErrorCodigoIntermedio(": La variable '" + $1.sval + "' en el ámbito actual no fue declarada.'");
+                                         this.asignacion = new TercetoOperandos(":=",new TercetoLexema("VariableNoEncontrada"), this.expresion);
+
+                                     }
+
+                                     this.addTerceto(asignacion);
+                                     this.tipoAsignacion = asignacion.getTipo();
+                                     this.al.bajaTablaDeSimbolos($1.sval);
+                                 }}
 
     ;
 
@@ -354,24 +539,27 @@ import java.util.*;
                                                                 this.addTerceto(etiqueta);
 													  
                                                             }
+     	|
+     	encabezadoIf cuerpoIf {addErrorSintactico("Falta ; al final de la sentencia IF, en linea " + al.getLinea());} 
 
     ;
 
 
     encabezadoIf :
-        IF '(' condicion ')'                        {	
-                                                        TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
-								                    	this.addTerceto(tercetoBF);
-                                                        this.pilaTercetos.push(tercetoBF);
-                                                    }
-
-    ;
+	   estructuraDeControl {if(!estructuraActual.equals("IF")) addErrorSintactico("Falta o esta mal escrita la palabra reservada IF  en linea " + al.getLinea());}
+    
 
     cuerpoIf :
         THEN cuerpoThen ENDIF
         |
         THEN cuerpoThen elseNT cuerpoElse ENDIF
-
+        |
+        error cuerpoThen ENDIF {addErrorSintactico("Falta o esta mal escrita palabra reservada THEN en cuerpo del IF");}
+        |
+        THEN cuerpoThen error {addErrorSintactico("Falta o esta mal escrita palabra reservada ENDIF en cuerpo del IF");}
+        |
+        THEN cuerpoThen elseNT cuerpoElse error {addErrorSintactico("Falta o esta mal escrita palabra reservada ENDIF en cuerpo del IF");}
+	
     ;
 
     cuerpoThen : 
@@ -391,51 +579,128 @@ import java.util.*;
 					TercetoOperandos etiqueta = new TercetoOperandos("Label_" + numeroDestino);
 					this.addTerceto(etiqueta);
                  }
+                
     ;
 
     cuerpoElse :
-        bloqueSentencias              {System.out.println("HOLA");};
+        bloqueSentencias             
 
     bloqueSentencias :
         sentenciaEjecutable
         |
         BEGIN conjuntoSentenciasEjecutables END ';'
-
+        |
+        BEGIN conjuntoSentenciasEjecutables END error {addErrorSintactico("Falta ; al final del bloque de sentencias en linea " + al.getLinea());}
+		|
+        BEGIN conjuntoSentenciasEjecutables error ';' {addErrorSintactico("Falta o esta mal escrito END al final del bloque de sentencias en linea " + al.getLinea());}
+		|
+        error conjuntoSentenciasEjecutables END ';' {addErrorSintactico("Falta o esta mal escrito BEGIN al principio del bloque de sentencias de la linea " + al.getLinea());}
+		
     ;
 
     sentenciaWhile :
-        whileNT condicionWhile DO bloqueSentencias         {
+        encabezadoWhile bloqueSentencias {
                                                                 addReglaSintacticaReconocida(String.format("Sentencia while reconocida en linea %1$d",al.getLinea()));
                                                                 TercetoOperandos tercetoBF = (TercetoOperandos) this.pilaTercetos.pop();   
                                                                 
-                                                                
-                                                                //
-                                                                
-                                                                //
+                                                             	
                                                                 
                                                                 int numeroDestino = this.numeroTercetos + 2;                                	                          
                                                                 tercetoBF.setOperador2(new TercetoPosicion(numeroDestino));
 																
-                                                                TercetoPosicion posicionBI = (TercetoPosicion) this.pilaTercetos.pop();
-
-                                                                TercetoOperandos TercetoBI = new TercetoOperandos("BI", posicionBI);
-                                                                this.addTerceto(TercetoBI);
+																if(pilaTercetos.size() > 0) {
+																 TercetoPosicion posicionBI = (TercetoPosicion) this.pilaTercetos.pop();
+																 TercetoOperandos TercetoBI = new TercetoOperandos("BI", posicionBI);
+                                                                 this.addTerceto(TercetoBI);
+                                                                 
+																}
+																
+                                                                
                                                                 TercetoOperandos etiqueta = new TercetoOperandos("Label_" + numeroDestino);
                                                                 this.addTerceto(etiqueta);
 
-                                                            }        
+                                                            }    
 
     ;
-
-    condicionWhile :
-        '(' condicion ')'{
-                            TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
-                            this.addTerceto(tercetoBF);
+    
+    encabezadoWhile : 
+    	estructuraDeControl DO {if(!estructuraActual.equals("WHILE")) addErrorSintactico("Falta o esta mal escrita la palabra reservada WHILE en linea " + al.getLinea());}
+	;
+	
+	estructuraDeControl : 
+		whileNT	'(' condicion ')'
+							 	{
+							 		estructuraActual = "WHILE";
+					    			TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
+					                this.addTerceto(tercetoBF);
+					                this.pilaTercetos.push(tercetoBF);
+				        		}
+		|
+		IF '(' condicion ')' 	{ 
+									estructuraActual = "IF";
+									TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
+			                    	this.addTerceto(tercetoBF);
+                                    this.pilaTercetos.push(tercetoBF);
+								}
+		|
+		error '(' condicion ')'	{				
+									estructuraActual = "";					
+									TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
+			                    	this.addTerceto(tercetoBF);
+                                    this.pilaTercetos.push(tercetoBF);
+								}
+		|
+		IF  condicion  ')'       {
+									estructuraActual = "IF";					
+									TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
+			                    	this.addTerceto(tercetoBF);
+                                    this.pilaTercetos.push(tercetoBF);
+                                    addErrorSintactico("Falta ( en condicion de linea " + al.getLinea());
+								}
+		|
+		IF '('  condicion {
+							estructuraActual = "IF";					
+							TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
+	                    	this.addTerceto(tercetoBF);
                             this.pilaTercetos.push(tercetoBF);
-                         }
+                            addErrorSintactico("Falta ) en condicion de linea " + al.getLinea());
+						}
+		|
+		whileNT	'(' condicion  {
+									estructuraActual = "WHILE";					
+									TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
+			                    	this.addTerceto(tercetoBF);
+                                    this.pilaTercetos.push(tercetoBF);
+                                    addErrorSintactico("Falta ) en condicion de linea " + al.getLinea());
+								}
+		|
+		whileNT	 condicion  ')'{
+									estructuraActual = "WHILE";					
+									TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
+			                    	this.addTerceto(tercetoBF);
+                                    this.pilaTercetos.push(tercetoBF);
+                                    addErrorSintactico("Falta ( en condicion de linea " + al.getLinea());
+								}
+		|
+		IF '(' error ')'		{
+									estructuraActual = "IF";					
+									TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
+			                    	this.addTerceto(tercetoBF);
+                                    this.pilaTercetos.push(tercetoBF);
+                                    //addErrorSintactico();
+								}
+		|
+		whileNT	'(' error ')' 	{
+									estructuraActual = "WHILE";					
+									TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
+			                    	this.addTerceto(tercetoBF);
+                                    this.pilaTercetos.push(tercetoBF);
+                                    //addErrorSintactico("Falta ( en condicion de linea " + al.getLinea());
+								}
+		;
+		
+		
 
-
-    ;
 
     whileNT : WHILE {
     					int incremento = 1;
@@ -448,6 +713,8 @@ import java.util.*;
                         TercetoPosicion posicion = new TercetoPosicion(numeroDestino);
                         this.pilaTercetos.push(posicion);
                     }
+               
+    
     ;
     sentenciaPrint :
         PRINT '(' CADENA ')' ';'                          {
@@ -471,6 +738,7 @@ import java.util.*;
         subcondicion								{this.TercetoCondicion = this.TercetoSubcondicion;
 
                                                     }
+     
     ;
 
 
@@ -488,8 +756,8 @@ import java.util.*;
     comparacion :
         expresionSimple comparador expresionSimple       {
                                                       TercetoOperandos ter = new TercetoOperandos(this.comparador, this.expresionPreComparador, this.expresion );
-                                                            if(!this.tipoExpresionPreComparador.equals(this.tipoExpresion)){
-                                                                listaErroresCodigoIntermedio.add("No es posible realizar una comparacion entre dos tipos distintos");
+                                                            if(!this.tipoExpresionPreComparador.toString().equals(this.tipoExpresion.toString())){
+                                                                listaErroresCodigoIntermedio.add("No es posible realizar una comparacion entre dos tipos distintos en linea " + al.getLinea());
                                                                 ter.setTipo(EntradaTablaSimbolos.SINGLE);
 
                                                             } else {
@@ -502,6 +770,8 @@ import java.util.*;
                                                                 hayFunc = false;
                                                              }
                                                          }
+     
+     	
                                                          		
     ;
 
@@ -542,6 +812,13 @@ import java.util.*;
                                     
                                     
                                    }
+       |
+       error {addErrorSintactico("Error en la expresion en linea " + al.getLinea());
+       								this.expresion = this.termino;
+                                    this.tipoExpresion.setLength(0);
+                                    this.tipoExpresion.append(this.tipoTermino.toString());
+                                    
+                                    this.listaExpresiones.add(this.expresion);}
        
         
 
@@ -607,7 +884,9 @@ import java.util.*;
 			  this.al.bajaTablaDeSimbolos($1.sval);
         }
         |
-        SINGLE '(' expresionSimple ')' {
+        inicioCasteo expresionSimple ')' {
+        
+                		 this.creandoCasteo = false;     
 		       			 this.factor = this.conversionExplicita(this.tipoExpresion, this.expresion);
 		        		 this.tipoFactor.setLength(0);
 						 this.tipoFactor.append(EntradaTablaSimbolos.SINGLE); 
@@ -637,6 +916,18 @@ import java.util.*;
                                 }
 
     ;
+    
+    
+    inicioCasteo: SINGLE '('  			{
+    										if(creandoCasteo){
+    											addErrorCodigoIntermedio("No es posible realizar una anidacion de casteos");
+    										} else {
+    										  creandoCasteo = true;
+    										
+    										}	
+    										
+    							
+    									}
 
 comparador : '>'  {
 					  this.accionSemanticaComparador();
@@ -792,7 +1083,7 @@ comparador : '>'  {
 	private int contadorVariablesAuxiliares = 1;
 	private int contadorVariablesAuxiliaresConversion = 1;
 	private String constante = "";
-
+	private boolean creandoCasteo = false;
 	private Terceto factor;
 	private Terceto termino;
 	private Terceto expresion;
@@ -807,7 +1098,8 @@ comparador : '>'  {
 	private StringBuilder tipoExpresion = new StringBuilder();
 	private String tipoAsignacion = "";
 	private StringBuilder tipoExpresionPreComparador = new StringBuilder();
-
+	
+	private String estructuraActual;
     public Parser(Reader fuente) {
 
         al = new AnalizadorLexico(fuente);
@@ -1068,3 +1360,23 @@ comparador : '>'  {
 		this.tipoExpresionPreComparador.setLength(0);
 		this.tipoExpresionPreComparador.append(this.tipoExpresion.toString());
 	}
+  private void postCondicion(String cadena){
+  	TercetoOperandos print = new TercetoOperandos("print", new TercetoLexema(cadena));
+	TercetoOperandos fin = new TercetoOperandos("fin");
+	
+	TercetoOperandos tercetoBF = new TercetoOperandos("BF", this.TercetoCondicion);
+	this.addTerceto(tercetoBF);
+	
+	TercetoOperandos tercetoBI = new TercetoOperandos("BI");
+	this.pilaTercetoFinFuncion.push(tercetoBI);
+	
+	this.addTerceto(tercetoBI);
+	
+	TercetoOperandos etiqueta = new TercetoOperandos("Label_" + ( this.numeroTercetos + 1));
+	this.addTerceto(etiqueta);		
+	
+	tercetoBF.setOperador2(etiqueta);		
+								
+	this.addTerceto(print);
+	this.addTerceto(fin);
+  }

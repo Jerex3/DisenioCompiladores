@@ -1,15 +1,28 @@
-IN socotroko, var2 var3, var4, dani;
-SINGLE asa;
-INT FUNC funcionloca(INT parasito) 
+INT var2, var3, var4, dani, popo;
+SINGLE asa, socotroko;
+INT FUNC funcionloca (INT parasito)
 	SINGLE varAux;
-	INT popo
-	BEGI
-		asa := parasito;
-		RETURN ( parasito );
+	INT popo;
+	BEGIN
+		asa := 	SINGLE (parasito);
+		RETURN (  parasito  );
+		POST : (var2 < var3 ) , %XD%;
 	END;
 BEGIN
    
-    varchota := var4;
-	asa := SINGLE (var2 - var3 * dani);
+    socotroko := SINGLE ( asa );
+    IF asa < var2) THEN 
+    BEGIN
+    	popo := 0;
+    	socotroko := SINGLE (popo);
+    END;
+     ELSE popo := socotroko; ENDIF;
+    
+	asa := SINGLE (var2 / var3);
+	
+	WHILE asa < var2) DO 
+	BEGIN
+		asa := asa + 1.2;
+	END; 
     
 END
